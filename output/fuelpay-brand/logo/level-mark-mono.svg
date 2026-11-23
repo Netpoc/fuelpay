@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="FuelPay">
+  <title>FuelPay level mark, monochrome</title>
+  <!-- One currentColor. Continuous outline; the fill and the gap carry the
+       level. Works on any field, in print, and in forced-colors mode. -->
+  <defs>
+    <clipPath id="lmm-fill"><rect x="0" y="18.1" width="32" height="13.9"/></clipPath>
+  </defs>
+  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="currentColor" fill-opacity="0.12"/>
+  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="currentColor" clip-path="url(#lmm-fill)"/>
+  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="none"
+        stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+</svg>

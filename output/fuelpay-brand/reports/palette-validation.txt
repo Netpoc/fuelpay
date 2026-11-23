@@ -1,0 +1,73 @@
+FuelPay palette validation
+generated from tokens/color.json
+
+WHY THREE STATUS HUES AND NOT FOUR
+A four-step ok/watch/low/critical ramp cannot pass. The two ambers are
+metamers under deuteranopia. Recorded here so the constraint is not
+rediscovered later:
+
+  $ validate_palette "#0F7B55,#B25E09,#C2410C,#B91C1C" --mode light --pairs all
+  
+  Palette (light, surface #fcfcfb, categorical): 4 slots
+    [PASS] Lightness band         all 4 inside L 0.43–0.77
+    [PASS] Chroma floor           all 4 >= 0.1
+    [FAIL] CVD separation         worst all-pairs #C2410C↔#B25E09 ΔE 1.3 (deutan) · tritan 3.2
+    [FAIL] Normal-vision floor    worst all-pairs #B91C1C↔#C2410C ΔE 6.1 (normal) — below 15, hard to tell apart even with full color vision
+    [PASS] Contrast vs surface    all 4 >= 3:1
+  
+    → FAILED — fix the marked checks  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
+    scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+
+SHIPPING PALETTES
+
+  PASS  status marks + fuel trace — light
+  $ validate_palette "#2a78d6,#0E7C5A,#D2760F,#96161F" --mode light --pairs all
+  
+  Palette (light, surface #fcfcfb, categorical): 4 slots
+    [PASS] Lightness band         all 4 inside L 0.43–0.77
+    [PASS] Chroma floor           all 4 >= 0.1
+    [PASS] CVD separation         worst all-pairs #96161F↔#0E7C5A ΔE 9.3 (deutan) · tritan 7.4
+    [PASS] Normal-vision floor    worst all-pairs #0E7C5A↔#2a78d6 ΔE 20.2 (normal)
+    [PASS] Contrast vs surface    all 4 >= 3:1
+  
+    → ALL CHECKS PASS  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
+    scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+
+  PASS  status marks + fuel trace — dark
+  $ validate_palette "#3987e5,#2FA985,#B78A20,#CC2A46" --mode dark --pairs all
+  
+  Palette (dark, surface #1a1a19, categorical): 4 slots
+    [PASS] Lightness band         all 4 inside L 0.48–0.67
+    [PASS] Chroma floor           all 4 >= 0.1
+    [PASS] CVD separation         worst all-pairs #CC2A46↔#2FA985 ΔE 10.7 (deutan) · tritan 4.7
+    [PASS] Normal-vision floor    worst all-pairs #B78A20↔#2FA985 ΔE 16.6 (normal)
+    [PASS] Contrast vs surface    all 4 >= 3:1
+  
+    → ALL CHECKS PASS  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
+    scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+
+  PASS  status marks alone — light
+  $ validate_palette "#0E7C5A,#D2760F,#96161F" --mode light --pairs all
+  
+  Palette (light, surface #fcfcfb, categorical): 3 slots
+    [PASS] Lightness band         all 3 inside L 0.43–0.77
+    [PASS] Chroma floor           all 3 >= 0.1
+    [PASS] CVD separation         worst all-pairs #96161F↔#0E7C5A ΔE 9.3 (deutan) · tritan 20.6
+    [PASS] Normal-vision floor    worst all-pairs #96161F↔#D2760F ΔE 23.9 (normal)
+    [PASS] Contrast vs surface    all 3 >= 3:1
+  
+    → ALL CHECKS PASS  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
+    scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+
+  PASS  status marks alone — dark
+  $ validate_palette "#2FA985,#B78A20,#CC2A46" --mode dark --pairs all
+  
+  Palette (dark, surface #1a1a19, categorical): 3 slots
+    [PASS] Lightness band         all 3 inside L 0.48–0.67
+    [PASS] Chroma floor           all 3 >= 0.1
+    [PASS] CVD separation         worst all-pairs #CC2A46↔#2FA985 ΔE 10.7 (deutan) · tritan 16.4
+    [PASS] Normal-vision floor    worst all-pairs #B78A20↔#2FA985 ΔE 16.6 (normal)
+    [PASS] Contrast vs surface    all 3 >= 3:1
+  
+    → ALL CHECKS PASS  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
+    scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.

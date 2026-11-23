@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="FuelPay">
+  <title>FuelPay level mark, small sizes</title>
+  <!--
+    For 24px and below. Same construction as the full mark — NOT a different
+    drawing — with two optical compensations for rasterisation:
+      stroke 1.6 -> 2.4  (0.8px is a grey smudge at 16px; 1.2px snaps)
+      tint   0.07 -> 0.13 (a 7% tint disappears against white at this size)
+
+    Two earlier attempts split the droplet into solid navy and solid amber
+    fields. Both read as a triangle sitting on a semicircle, because that is
+    literally the geometry once the outline is gone: the tangents are straight
+    lines, so without a continuous silhouette there are no shoulders. Keeping
+    the outline and thickening it is what actually survives.
+  -->
+  <defs>
+    <clipPath id="lms-fill"><rect x="0" y="18.1" width="32" height="13.9"/></clipPath>
+  </defs>
+  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="#0B2545" fill-opacity="0.13"/>
+  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="#F2A93B" clip-path="url(#lms-fill)"/>
+  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z"
+        fill="none" stroke="#0B2545" stroke-width="2.4" stroke-linejoin="round"/>
+</svg>

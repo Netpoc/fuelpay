@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>FuelPay — fleet fuel monitoring</title>
+    <meta
+      name="description"
+      content="Live tank levels, refill records and theft detection for diesel generator fleets."
+    />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0B2545" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0B1420" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FuelPay — fleet fuel monitoring" />
+    <meta
+      property="og:description"
+      content="Live tank levels, refill records and theft detection for diesel generator fleets."
+    />
+    <meta property="og:image" content="/og-card-1200x630.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!--
+      Theme, before first paint.
+
+      This has to be a blocking inline script: in dev the stylesheet arrives
+      via JS, so anything deferred until Vue mounts shows a flash of the wrong
+      theme on every reload. Keep the storage key and attribute name in sync
+      with src/composables/useTheme.ts.
+    -->
+    <script>
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('fuelpay.theme') || 'auto'
+          var mode =
+            stored === 'auto'
+              ? matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light'
+              : stored
+          var root = document.documentElement
+          root.dataset.theme = mode
+          root.style.colorScheme = mode
+        } catch (e) {
+          /* storage disabled — light is a fine default */
+        }
+      })()
+    </script>
+    <!-- Paints the page background before the stylesheet has loaded. -->
+    <style>
+      html {
+        background: #f6f8fa;
+      }
+      html[data-theme='dark'] {
+        background: #0b1420;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

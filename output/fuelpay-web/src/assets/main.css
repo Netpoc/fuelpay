@@ -1,0 +1,283 @@
+/**
+ * Design tokens and base layer.
+ *
+ * Tailwind v4 WITHOUT preflight — `ant-design-vue/dist/reset.css` (imported
+ * first in main.ts) is the only reset. Running two resets is what breaks
+ * antd's buttons and Typography. The cost is that base rules preflight would
+ * have given us are ours to write; they live in @layer base below.
+ *
+ * ant-design-vue 4 injects its component CSS at runtime and UNLAYERED, and
+ * unlayered CSS beats layered CSS whatever the source order. So Tailwind
+ * utilities cannot override antd components — style antd through the
+ * ConfigProvider tokens in theme/tokens.ts instead. If you truly must, v4's
+ * important modifier is a SUFFIX: `bg-surface!`, not `!bg-surface`.
+ */
+@layer theme, base, leaflet, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+/* Leaflet, unlike antd, is a real stylesheet we control the import of — so it
+   goes in a LAYER and the note above does not apply to it. Imported here rather
+   than in main.ts, because a bare import there would land unlayered and beat
+   everything: `.leaflet-container a { color: #0078A8 }` would then win over our
+   base anchor rule and render the OSM/CARTO attribution — which we are required
+   to display — in unreadable Leaflet-blue on the dark surface.
+
+   Placed after `base` so Leaflet's own positioning survives our reset
+   substitutes, and before `components`/`utilities` so both Tailwind utilities
+   and scoped component styles can theme it without !important. */
+@import 'leaflet/dist/leaflet.css' layer(leaflet);
+@import 'leaflet.markercluster/dist/MarkerCluster.css' layer(leaflet);
+
+/* Bind Tailwind's dark variant to the attribute rather than a class, so it
+   never collides with the utility classes on the same element. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* ---------------------------------------------------------------------------
+   Semantic tokens. Plain :root blocks, because @theme cannot be redeclared
+   per selector. Values mirror ../../fuelpay-brand/tokens/color.json — that
+   file is the source of truth and is machine-validated.
+   --------------------------------------------------------------------------- */
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+
+  --surface: #f6f8fa;
+  --surface-raised: #ffffff;
+  --surface-sunken: #eef2f6;
+
+  --ink: #0b1b2b;
+  /* 6.60:1. Replaces #64748B, which measured 4.47:1 and was being used at
+     11-12px in fourteen places — a WCAG AA failure at exactly those sizes. */
+  --ink-muted: #4b5a6e;
+  --ink-subtle: #5a6879; /* 5.34:1 — 14px and above only */
+
+  --hairline: #dde4ec;
+  --hairline-strong: #c6d0dc;
+
+  --brand: #0b2545;
+  --accent: #f2a93b;
+  --interactive: #123a63;
+  --focus: #b5730a;
+
+  --status-ok: #0e7c5a;
+  --status-watch: #d2760f;
+  --status-critical: #96161f;
+  --status-ok-text: #0b6448;
+  --status-watch-text: #8a5a08;
+  --status-critical-text: #8e1420;
+
+  --on-solid: #ffffff;
+
+  --elev-1: 0 1px 2px rgb(11 27 43 / 6%);
+  --elev-2: 0 2px 12px rgb(11 27 43 / 8%);
+
+  /* Tank paint. Diesel is amber in both themes because the liquid's colour is
+     a fact about the liquid; only its lighting changes. */
+  --tank-fuel-1: #c4871f;
+  --tank-fuel-2: #eab24a;
+  --tank-fuel-3: #d99a2b;
+  --tank-fuel-4: #a86f14;
+  --tank-surface: #f0c268;
+  --tank-surface-edge: #a86f14;
+  --tank-glass-1: #9aa4ae;
+  --tank-glass-2: #eef2f5;
+  --tank-glass-3: #c3ccd6;
+  --tank-glass-4: #7c8894;
+  --tank-glass-o1: 0.35;
+  --tank-glass-o2: 0.25;
+  --tank-glass-o3: 0.2;
+  --tank-glass-o4: 0.4;
+  --tank-shell: #5b6670;
+  --tank-rim: #8d99a6;
+  --tank-specular: 0.35;
+  --tank-placard-stroke: #3f4750;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --surface: #0b1420;
+  --surface-raised: #121c2a;
+  --surface-sunken: #070e17;
+
+  --ink: #e9eff6;
+  --ink-muted: #9aaabe; /* 7.24:1 */
+  --ink-subtle: #7b8ca3;
+
+  --hairline: #1e2a3a;
+  --hairline-strong: #2c3a4d;
+
+  --brand: #0b2545;
+  --accent: #f2a93b;
+  --interactive: #3f8ad8;
+  --focus: #f2a93b;
+
+  --status-ok: #2fa985;
+  --status-watch: #b78a20;
+  --status-critical: #cc2a46;
+  --status-ok-text: #45c39c;
+  --status-watch-text: #e0b554;
+  --status-critical-text: #f58095;
+
+  /* Solid status chips carry dark text in dark mode: white on the dark amber
+     is only 3.2:1. */
+  --on-solid: #0b1420;
+
+  /* A drop shadow is invisible on a dark field, so depth is carried by a
+     border and surface lift instead. */
+  --elev-1: 0 0 0 1px var(--hairline);
+  --elev-2:
+    0 0 0 1px var(--hairline-strong),
+    0 4px 16px rgb(0 0 0 / 40%);
+
+  /* Darkened ~12% and de-lit: the light ramp glows like neon on a dark field.
+     The specular stripe dropping from .35 to .14 is the single biggest tell
+     if it is missed. */
+  --tank-fuel-1: #a8721a;
+  --tank-fuel-2: #d9a03e;
+  --tank-fuel-3: #bf8724;
+  --tank-fuel-4: #8f5f11;
+  --tank-surface: #d9a851;
+  --tank-surface-edge: #8f5f11;
+  --tank-glass-1: #5c6b7d;
+  --tank-glass-2: #8fa3b8;
+  --tank-glass-3: #46566a;
+  --tank-glass-4: #1b2634;
+  --tank-glass-o1: 0.22;
+  --tank-glass-o2: 0.14;
+  --tank-glass-o3: 0.12;
+  --tank-glass-o4: 0.4;
+  --tank-shell: #8fa0b5;
+  --tank-rim: #6d7d92;
+  --tank-specular: 0.14;
+  --tank-placard-stroke: #1f2933;
+}
+
+/* ---------------------------------------------------------------------------
+   Alias the semantics into Tailwind so `bg-surface-raised`, `text-ink-muted`
+   and `border-hairline` exist. The indirection resolves at use-site, so a
+   utility follows the theme without needing a dark: variant on every element.
+
+   `static` is mandatory: v4 tree-shakes theme variables that no utility
+   references, and several components read these as raw var() from their own
+   CSS.
+   --------------------------------------------------------------------------- */
+@theme static {
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-brand: var(--brand);
+  --color-accent: var(--accent);
+  --color-interactive: var(--interactive);
+  --color-status-ok: var(--status-ok);
+  --color-status-watch: var(--status-watch);
+  --color-status-critical: var(--status-critical);
+
+  --radius-control: 6px;
+  --radius-card: 10px;
+  --radius-panel: 14px;
+
+  --font-sans: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+
+/* Motion vocabulary. The last two came from the tank and are SEMANTIC:
+   decelerate = something arriving, accelerate = something leaving or failing.
+   Do not normalise them to a single curve. */
+:root {
+  --dur-micro: 120ms;
+  --dur-control: 180ms;
+  --dur-surface: 240ms;
+  --dur-route: 320ms;
+  --dur-level: 900ms;
+  --dur-event: 1800ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-decelerate: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-accelerate: cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  /* Without preflight there is no anchor reset, and every RouterLink
+     underlines its whole subtree — a card that happens to be a link renders
+     with every label and figure underlined. */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  svg {
+    display: block;
+  }
+
+  /* There was no focus styling at all before this: preflight is skipped, so
+     nothing established a baseline, and the primary interactive element on
+     the dashboard had no visible keyboard affordance. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: inherit;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 34%, transparent);
+  }
+}
+
+@layer components {
+  /* Numeric readouts line up in a column when digits are tabular. Without
+     this, a level ticking 998 -> 1002 visibly jitters its own label. */
+  .tabular {
+    font-variant-numeric: tabular-nums slashed-zero;
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Visible only when focused — the keyboard entry point to the page. */
+  .skip-link {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 100;
+    padding: 10px 16px;
+    border-radius: var(--radius-control);
+    background: var(--surface-raised);
+    color: var(--ink);
+    box-shadow: var(--elev-2);
+    transform: translateY(-160%);
+    transition: transform var(--dur-control) var(--ease-standard);
+  }
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
+}
+
+/* Previously honoured in exactly one component, so antd's own animations and
+   every transition ignored the preference entirely. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

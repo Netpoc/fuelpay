@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FuelPay — Brand Manual</title>
+<style>
+:root {
+  --surface:#F6F8FA; --raised:#FFFFFF; --sunken:#EEF2F6;
+  --ink:#0B1B2B; --ink-muted:#4B5A6E; --ink-subtle:#5A6879;
+  --hairline:#DDE4EC; --hairline-strong:#C6D0DC;
+  --navy:#0B2545; --amber:#F2A93B; --focus:#B5730A;
+  --ok:#0E7C5A; --watch:#D2760F; --critical:#96161F;
+  --ok-text:#0B6448; --watch-text:#8A5A08; --critical-text:#8E1420;
+  --fuel:#2a78d6; --load:#5A6879;
+  color-scheme: light;
+}
+[data-theme=dark] {
+  --surface:#0B1420; --raised:#121C2A; --sunken:#070E17;
+  --ink:#E9EFF6; --ink-muted:#9AAABE; --ink-subtle:#7B8CA3;
+  --hairline:#1E2A3A; --hairline-strong:#2C3A4D;
+  --focus:#F2A93B;
+  --ok:#2FA985; --watch:#B78A20; --critical:#CC2A46;
+  --ok-text:#45C39C; --watch-text:#E0B554; --critical-text:#F58095;
+  --fuel:#3987e5; --load:#94A3B8;
+  color-scheme: dark;
+}
+* { box-sizing:border-box }
+body {
+  margin:0; background:var(--surface); color:var(--ink);
+  font:15px/1.6 'Inter Variable','Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap { max-width:920px; margin:0 auto; padding:0 24px 96px }
+header.top {
+  position:sticky; top:0; z-index:10; background:var(--raised);
+  border-bottom:1px solid var(--hairline); margin-bottom:40px;
+}
+header.top .bar { max-width:920px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; gap:16px }
+header.top svg { height:28px; width:auto }
+.spacer { margin-left:auto }
+button.toggle {
+  font:inherit; font-size:13px; padding:7px 13px; border-radius:6px; cursor:pointer;
+  background:var(--sunken); color:var(--ink); border:1px solid var(--hairline-strong);
+}
+button.toggle:focus-visible { outline:2px solid var(--focus); outline-offset:2px }
+h1 { font-size:34px; line-height:1.15; letter-spacing:-0.025em; margin:32px 0 8px }
+h2 {
+  font-size:13px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-muted);
+  margin:56px 0 14px; padding-bottom:8px; border-bottom:1px solid var(--hairline);
+}
+h3 { font-size:17px; margin:28px 0 8px }
+p { margin:0 0 14px; max-width:66ch; color:var(--ink) }
+p.lede { font-size:18px; color:var(--ink-muted); max-width:60ch }
+small, .muted { color:var(--ink-muted); font-size:13px }
+code, .mono { font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace; font-size:12.5px }
+.card { background:var(--raised); border:1px solid var(--hairline); border-radius:10px; padding:20px }
+.grid { display:grid; gap:12px }
+.row { display:flex; flex-wrap:wrap; gap:12px; align-items:center }
+
+/* swatches */
+.sw { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px }
+.sw .chip { border:1px solid var(--hairline); border-radius:8px; overflow:hidden; background:var(--raised) }
+.sw .patch { height:56px }
+.sw .meta { padding:8px 10px; font-size:12px; line-height:1.45 }
+.sw .name { font-weight:600 }
+.sw .hex { color:var(--ink-muted) }
+
+/* status chips, showing the two-weight rule */
+.status { display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:999px;
+  font-size:12px; font-weight:600; line-height:1.5 }
+.status.ok { background:color-mix(in srgb, var(--ok) 12%, transparent); color:var(--ok-text) }
+.status.watch { background:color-mix(in srgb, var(--watch) 12%, transparent);
+  color:var(--watch-text); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--watch) 45%, transparent) }
+.status.low { background:var(--watch); color:#fff }
+.status.critical { background:var(--critical); color:#fff }
+[data-theme=dark] .status.low, [data-theme=dark] .status.critical { color:#0B1420 }
+
+table { border-collapse:collapse; width:100%; font-size:13.5px; margin:8px 0 }
+th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--hairline); vertical-align:top }
+th { font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-muted); font-weight:600 }
+td.num { font-variant-numeric:tabular-nums }
+
+pre { background:var(--sunken); border:1px solid var(--hairline); border-radius:8px;
+  padding:14px; overflow:auto; font-size:12px; line-height:1.55; margin:10px 0 }
+
+.specimen { display:flex; align-items:flex-end; gap:22px; flex-wrap:wrap;
+  background:var(--raised); border:1px solid var(--hairline); border-radius:10px; padding:20px }
+.specimen figure { margin:0; text-align:center }
+.specimen figcaption { font-size:11px; color:var(--ink-muted); margin-top:8px }
+.on-navy { background:var(--navy); border-radius:10px; padding:20px }
+
+.dont { color:var(--critical-text); font-weight:600 }
+.do { color:var(--ok-text); font-weight:600 }
+ul.rules { max-width:66ch; padding-left:20px }
+ul.rules li { margin-bottom:7px }
+
+/* motion demo */
+.motion { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px }
+.track { background:var(--sunken); border-radius:8px; padding:12px; border:1px solid var(--hairline) }
+.dot { width:20px; height:20px; border-radius:5px; background:var(--amber) }
+.run .dot { animation:slide 2.4s infinite alternate }
+.t1 .dot { animation-timing-function:cubic-bezier(.4,0,.2,1) }
+.t2 .dot { animation-timing-function:cubic-bezier(.16,1,.3,1) }
+.t3 .dot { animation-timing-function:cubic-bezier(.7,0,.84,0) }
+@keyframes slide { to { transform:translateX(calc(100% + 110px)) } }
+@media (prefers-reduced-motion:reduce) { .run .dot { animation:none } }
+.clearspace { position:relative; display:inline-block; padding:25%; outline:1px dashed var(--hairline-strong) }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="bar">
+    <span id="hdr-logo"></span>
+    <span class="muted">Brand Manual</span>
+    <span class="spacer"></span>
+    <button class="toggle" id="toggle" aria-pressed="false">Dark</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+<h1>FuelPay</h1>
+<p class="lede">Energy infrastructure, engineered trust. This document is the source of truth for the mark, the palette, the type and the motion — and every colour in it has been machine-validated, not eyeballed.</p>
+
+<h2>1 · Positioning</h2>
+<p>FuelPay measures diesel in generator tanks across Nigerian sites and tells an operator three things: how much fuel they have, when a site will go dark, and when fuel has left a tank without being burned.</p>
+<p>The brand has to carry <strong>engineering credibility</strong> — these numbers get billed against and used to accuse — while staying warm enough for an operations manager to live in all day. Deep ink navy for authority; precision amber, the colour of diesel itself, for the one thing being measured.</p>
+<h3>Tone of voice</h3>
+<ul class="rules">
+  <li><span class="do">Do</span> say <em>suspected drain</em>. The sensor infers from a rate of change; it does not witness a theft.</li>
+  <li><span class="dont">Don't</span> say <em>theft</em> in the interface. The product surfaces evidence; a human makes the accusation.</li>
+  <li><span class="do">Do</span> give figures their unit and their uncertainty. Published consumption curves disagree by 20–40%, so precision beyond about a litre is false confidence.</li>
+  <li><span class="dont">Don't</span> use exclamation marks or urgency language. The colour and position already carry the alarm.</li>
+</ul>
+
+<h2>2 · The mark</h2>
+<p>A fuel droplet cut by a fill line. It owns both halves of the product in one gesture — the fuel, and the measurement of it.</p>
+<div class="specimen" id="mark-row"></div>
+<h3>Construction</h3>
+<p>The geometry is exact, not eyeballed. The body is a circle at <code>C = (16, 20)</code> with <code>r = 9.5</code>; the apex sits at <code>A = (16, 3)</code>, giving <code>d = 17</code>. The sides are the true tangents from the apex to the circle, meeting it at a half-angle of <code>β = arccos(r/d) = 56.03°</code> — that is, at <code>(8.12, 14.69)</code> and <code>(23.88, 14.69)</code>.</p>
+<pre>&lt;path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z"/&gt;</pre>
+<p><code>large-arc = 1</code> because the arc spans 247.9°; <code>sweep = 0</code> because the direction is counter-clockwise in SVG's y-down space.</p>
+<h3>The rule that matters most</h3>
+<p><strong>The silhouette is continuous.</strong> An early version clipped the outline into an upper and a lower half. Because the sides are straight tangent lines, severing the outline destroyed the shoulders where they meet the circle — and the mark read as a funnel, not a droplet. A teardrop's entire character lives in those shoulders. The outline is therefore drawn once, unbroken, over everything; only the <em>fill</em> is cut.</p>
+<p>The surface sits at <code>y = 16.9</code>, leaving <strong>~62% fill by area</strong>. That is deliberate: the mark should read as comfortably above any reorder threshold, which is the promise the product makes.</p>
+
+<h2>3 · Small sizes</h2>
+<p>The fill line is the first thing to die. Below <strong>24px</strong>, switch to <code>level-mark-small.svg</code> — the <em>same construction</em>, optically compensated: stroke 1.6 → 2.4 (0.8px is a grey smudge; 1.2px snaps to the grid) and tint 0.07 → 0.13 (a 7% tint vanishes against white at this size).</p>
+<p class="muted">Two earlier attempts replaced the outline with two solid fields. Both read as a triangle sitting on a semicircle — that is literally the geometry once the silhouette is gone. Keeping the outline and thickening it is what actually survives.</p>
+<div class="specimen" id="small-row"></div>
+
+<h2>4 · Variants and clear space</h2>
+<div class="specimen" id="variants"></div>
+<div class="specimen on-navy" id="variants-dark" style="margin-top:12px"></div>
+<p style="margin-top:16px">Clear space on all four sides is <strong>25% of the mark's height</strong>. Nothing — type, rule, image edge — enters it.</p>
+<div class="specimen"><figure><span class="clearspace" id="clearspace"></span><figcaption>25% on every side</figcaption></figure></div>
+<h3>Lockup metrics</h3>
+<p>Mark height is <strong>1.6× the wordmark's cap height</strong>, and the mark's fill line aligns to the wordmark's x-height median. That alignment is the reason the lockup reads as engineered rather than assembled. Wordmark is Inter 600 at −0.012em, in a single colour — the mark carries all the amber.</p>
+<p class="muted">The supplied lockup files keep the wordmark as live <code>&lt;text&gt;</code>. For print or any environment without Inter, outline the type once from these files.</p>
+
+<h2>5 · Misuse</h2>
+<ul class="rules">
+  <li><span class="dont">Never</span> recolour the amber. It is diesel.</li>
+  <li><span class="dont">Never</span> render the fill line as a stroke — it must stay a knockout gap, or it disappears when scaled.</li>
+  <li><span class="dont">Never</span> use the full mark below 24px; use the small variant.</li>
+  <li><span class="dont">Never</span> place the mark on an amber field, or the fuel disappears.</li>
+  <li><span class="dont">Never</span> rotate, skew, or add a drop shadow.</li>
+  <li><span class="dont">Never</span> change the fill level to imply a reading. The mark is identity, not a gauge — except the deliberate empty variant used on the 404 screen.</li>
+</ul>
+
+<h2>6 · Colour</h2>
+<h3>Brand</h3>
+<div class="sw" id="sw-brand"></div>
+<h3>Surfaces and ink</h3>
+<div class="sw" id="sw-neutral"></div>
+<p><strong><code>#64748B</code> is deleted from the system.</strong> It measured 4.47:1 on the light surface and was being used at 11–12px in fourteen places — a WCAG AA failure at exactly the sizes it was used. <code>--ink-muted</code> is now 6.60:1 in light and 7.24:1 in dark.</p>
+
+<h3>Status — three hues, two weights</h3>
+<p>A four-step traffic-light ramp <strong>cannot pass colourblind validation</strong>. The two ambers are metamers: under deuteranopia they separate by ΔE 1.3, where the floor is 6. This is a property of the semantics, not of colour picking.</p>
+<p>So <em>watch</em> and <em>low</em> share a hue and differ by <strong>fill weight</strong> — soft tint with an outline versus solid — backed by an always-present text label. Hue is never the only channel.</p>
+<div class="row" style="margin:14px 0 6px">
+  <span class="status ok">OK</span>
+  <span class="status watch">Watch</span>
+  <span class="status low">Below reorder</span>
+  <span class="status critical">Critical</span>
+</div>
+<p class="muted">Toggle this page to dark: the two-weight distinction is structurally identical in both themes.</p>
+<h3>Chart</h3>
+<p>Fuel level takes the blue; the load trace is <strong>achromatic steel</strong>. Fuel and load are drawn in separate stacked grids and never overlap, so a second hue was decoration — and dropping it removes a pair from the colourblind pairlist entirely.</p>
+<div class="sw" id="sw-chart"></div>
+<h3>Validation</h3>
+<p>Run <code>node scripts/validate-palettes.mjs</code>. It exits non-zero on any failure and writes <code>reports/palette-validation.txt</code>, which includes the failing four-step counter-example above so the constraint is documented rather than rediscovered.</p>
+
+<h2>7 · Typography</h2>
+<p><strong>Inter Variable</strong> for interface, <strong>IBM Plex Mono</strong> for serials, API keys and coordinates — Plex reads as instrumentation where a coding font would read as an IDE. Both are self-hosted; nothing is fetched from a CDN.</p>
+<table id="type-scale"></table>
+<p>Every figure carries <code>tabular-nums</code> and <code>slashed-zero</code>, so a level ticking 998 → 1002 does not make its own label jitter.</p>
+<p class="mono" style="font-variant-numeric:tabular-nums slashed-zero;font-size:19px">1,167 L · 0.8 pf · 62.4% · −287 L · +823 L</p>
+
+<h2>8 · Space, radius, elevation</h2>
+<p>Spacing is the 4px scale restricted to 1 2 3 4 5 6 8 10 12 16. Radius: <code>control 6</code>, <code>card 10</code>, <code>panel 14</code>, <code>pill 999</code>.</p>
+<p><strong>Elevation is theme-aware.</strong> In dark mode a drop shadow is invisible, so depth is carried by surface lift plus a border instead of by shadow.</p>
+<div class="row" id="elev"></div>
+
+<h2>9 · Motion</h2>
+<p>Two easings carry meaning and must not be normalised away: <strong>decelerate = something arriving</strong> (a refill settling), <strong>accelerate = something leaving or failing</strong> (a tank draining). They came from the tank component and are now the vocabulary.</p>
+<div class="motion">
+  <div class="track run t1"><div class="dot"></div><small>standard · 120–320ms<br><code>cubic-bezier(.4,0,.2,1)</code></small></div>
+  <div class="track run t2"><div class="dot"></div><small>decelerate · arriving<br><code>cubic-bezier(.16,1,.3,1)</code></small></div>
+  <div class="track run t3"><div class="dot"></div><small>accelerate · failing<br><code>cubic-bezier(.7,0,.84,0)</code></small></div>
+</div>
+<table>
+  <tr><th>Token</th><th>Duration</th><th>Use</th></tr>
+  <tr><td><code>--dur-micro</code></td><td class="num">120ms</td><td>hover, chip press</td></tr>
+  <tr><td><code>--dur-control</code></td><td class="num">180ms</td><td>toggles, focus</td></tr>
+  <tr><td><code>--dur-surface</code></td><td class="num">240ms</td><td>panels, disclosure</td></tr>
+  <tr><td><code>--dur-route</code></td><td class="num">320ms</td><td>page transitions</td></tr>
+  <tr><td><code>--dur-level</code></td><td class="num">900ms</td><td>tank level change</td></tr>
+  <tr><td><code>--dur-event</code></td><td class="num">1800ms</td><td>refill / drain</td></tr>
+</table>
+<p class="muted">Everything above is disabled under <code>prefers-reduced-motion</code>. The level still updates — instantly — so no information is lost.</p>
+
+<h2>10 · Assets</h2>
+<table>
+  <tr><th>File</th><th>Purpose</th></tr>
+  <tr><td class="mono">logo/level-mark.svg</td><td>primary mark, 24px and up</td></tr>
+  <tr><td class="mono">logo/level-mark-small.svg</td><td>16–24px; favicons rasterise from this</td></tr>
+  <tr><td class="mono">logo/level-mark-mono.svg</td><td>one <code>currentColor</code>; print, forced-colors</td></tr>
+  <tr><td class="mono">logo/level-mark-reversed.svg</td><td>on navy or dark surfaces</td></tr>
+  <tr><td class="mono">logo/level-mark-empty.svg</td><td>the 404 screen — the mark, drained</td></tr>
+  <tr><td class="mono">logo/lockup-*.svg</td><td>horizontal, stacked, tagline, reversed</td></tr>
+  <tr><td class="mono">icons/favicon.ico</td><td>16/32/48 packed, PNG payloads</td></tr>
+  <tr><td class="mono">icons/apple-touch-icon-180.png</td><td>opaque navy — iOS composites black behind alpha</td></tr>
+  <tr><td class="mono">icons/maskable-512.png</td><td>62% inset for Android's circle crop</td></tr>
+  <tr><td class="mono">icons/og-card-1200x630.png</td><td>social card</td></tr>
+</table>
+<p>Regenerate with <code>node scripts/render-icons.mjs</code> then <code>node scripts/make-ico.mjs</code>. Both use the Playwright already installed in <code>fuelpay-web</code> — no new tooling.</p>
+<div class="specimen"><figure><img src="icons/og-card-1200x630.png" alt="FuelPay social card" style="width:100%;max-width:600px;border-radius:8px;border:1px solid var(--hairline)"><figcaption>og-card-1200x630.png</figcaption></figure></div>
+
+</div>
+
+<script>
+// Inlined by scripts/build-manual.mjs. They must be inlined rather than
+// fetched: this page has to open by double-clicking it, and fetch() is blocked
+// under the file:// scheme.
+const svg = /*__SVG_DATA__*/ {}
+
+// Unique-ify clipPath ids per injection: several copies of the same file on one
+// page would otherwise all clip to whichever the document resolved first.
+let n = 0
+const inject = (markup, style = '') => {
+  const id = `u${n++}`
+  const scoped = markup.replace(/(id="|url\(#)([a-z-]+)/g, (_, p, name) => `${p}${name}-${id}`)
+  return `<span style="${style}">${scoped}</span>`
+}
+const sized = (markup, px) => markup.replace(/width="[\d.]+" height="[\d.]+"/, m =>
+  m.replace(/width="([\d.]+)" height="([\d.]+)"/, (_, w, h) =>
+    `width="${px}" height="${(px * h / w).toFixed(1)}"`))
+
+document.getElementById('hdr-logo').innerHTML = inject(sized(svg.h, 108))
+
+const figures = (el, items) => {
+  document.getElementById(el).innerHTML = items.map(([markup, px, cap, style]) =>
+    `<figure>${inject(sized(markup, px), style)}<figcaption>${cap}</figcaption></figure>`).join('')
+}
+figures('mark-row', [96,64,48,32,24].map(p => [svg.mark, p, `${p}px`]))
+figures('small-row', [[svg.mark,24,'full at 24'],[svg.small,24,'small at 24'],
+  [svg.mark,16,'full at 16'],[svg.small,16,'small at 16 ✓']])
+figures('variants', [[svg.h,180,'horizontal'],[svg.stacked,110,'stacked'],
+  [svg.tagline,180,'with tagline'],[svg.wordmark,110,'wordmark'],
+  [svg.mono,48,'mono'],[svg.empty,48,'empty (404)']])
+figures('variants-dark', [[svg.hr,180,'reversed'],[svg.reversed,48,'mark reversed']])
+document.getElementById('clearspace').innerHTML = inject(sized(svg.mark, 64))
+
+const swatch = (target, rows) => {
+  document.getElementById(target).innerHTML = rows.map(([name, value, note]) =>
+    `<div class="chip"><div class="patch" style="background:${value}"></div>
+     <div class="meta"><div class="name">${name}</div><div class="hex mono">${value}</div>
+     ${note ? `<div class="hex">${note}</div>` : ''}</div></div>`).join('')
+}
+swatch('sw-brand', [
+  ['Ink Navy 800','#0B2545','brand primary'],
+  ['Ink Navy 900','#071A33',''],
+  ['Precision Amber','#F2A93B','accent · diesel · focus'],
+  ['Amber 600','#D98E1F','fills'],
+  ['Amber 800','#8A5A08','amber as text, 5.56:1'],
+])
+const N = getComputedStyle(document.documentElement)
+const neutral = () => swatch('sw-neutral', [
+  ['surface', N.getPropertyValue('--surface').trim(), ''],
+  ['surface-raised', N.getPropertyValue('--raised').trim(), ''],
+  ['ink', N.getPropertyValue('--ink').trim(), 'light 16.4:1'],
+  ['ink-muted', N.getPropertyValue('--ink-muted').trim(), 'light 6.60:1 · dark 7.24:1'],
+  ['hairline', N.getPropertyValue('--hairline').trim(), ''],
+])
+const chart = () => swatch('sw-chart', [
+  ['fuel', getComputedStyle(document.documentElement).getPropertyValue('--fuel').trim(), 'level trace'],
+  ['load', getComputedStyle(document.documentElement).getPropertyValue('--load').trim(), 'achromatic'],
+])
+neutral(); chart()
+
+document.getElementById('type-scale').innerHTML =
+  `<tr><th>Token</th><th>Size / line</th><th>Specimen</th></tr>` +
+  [['display','30 / 34','Fleet fuel 7,529 L'],['h1','24 / 30','Wuse II Tower GEN-1'],
+   ['h2','19 / 26','Fuel usage'],['body','14 / 21','Reorder threshold 25% · 271 L'],
+   ['caption','12 / 16','updated 2m ago'],['eyebrow','11 / 14 · +0.08em','RUNNING']]
+  .map(([t,s,spec]) => `<tr><td><code>${t}</code></td><td class="num">${s}</td>
+    <td style="font-size:${{display:30,h1:24,h2:19,body:14,caption:12,eyebrow:11}[t]}px;
+    ${t==='eyebrow'?'letter-spacing:.08em;text-transform:uppercase':''}">${spec}</td></tr>`).join('')
+
+document.getElementById('elev').innerHTML = [1,2].map(i =>
+  `<div class="card" style="box-shadow:var(--elev-${i});min-width:150px">elevation ${i}</div>`).join('')
+
+const root = document.documentElement
+const btn = document.getElementById('toggle')
+btn.addEventListener('click', () => {
+  const dark = root.dataset.theme === 'dark'
+  root.dataset.theme = dark ? 'light' : 'dark'
+  btn.textContent = dark ? 'Dark' : 'Light'
+  btn.setAttribute('aria-pressed', String(!dark))
+  neutral(); chart()
+})
+</script>
+<style>
+:root { --elev-1:0 1px 2px rgb(11 27 43 / .06); --elev-2:0 2px 12px rgb(11 27 43 / .08) }
+[data-theme=dark] { --elev-1:0 0 0 1px var(--hairline);
+  --elev-2:0 0 0 1px var(--hairline-strong), 0 4px 16px rgb(0 0 0 / .40) }
+</style>
+</body>
+</html>

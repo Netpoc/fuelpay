@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 103 64" width="103" height="64" role="img" aria-label="FuelPay">
+  <title>FuelPay</title>
+<g transform="translate(35.5 0) scale(1)">
+  
+  <!--
+    Geometry is exact, not eyeballed.
+      body circle  C = (16, 20), r = 9.5
+      apex         A = (16, 3),  d = |CA| = 17
+      tangent half-angle  beta = acos(r/d) = 56.03 deg
+      tangent points      (8.12, 14.69) and (23.88, 14.69)
+    large-arc = 1 (the arc spans 247.9 deg); sweep = 0 (counter-clockwise in
+    SVG's y-down space).
+
+    THE SILHOUETTE IS CONTINUOUS. An earlier version clipped the outline into
+    an upper and a lower half, which severed the shoulders where the tangents
+    meet the circle — and since those tangents are straight lines, the top half
+    became a bare triangle and the whole thing read as a funnel, not a droplet.
+    The teardrop's entire character lives in those shoulders.
+
+    So the outline is drawn once, unbroken, over everything. Only the FILL is
+    cut: amber below the surface, a 1.2-unit gap of empty vessel above it. The
+    gap is a knockout rather than a stroke because a stroke thins to nothing
+    when scaled down, whereas a gap between two fields survives.
+
+    Surface at y = 16.9 leaves ~62% fill by area — comfortably above any
+    reorder threshold, which is the promise the product makes.
+  -->
+  <defs>
+    <clipPath id="s-fill"><rect x="0" y="18.1" width="32" height="13.9"/></clipPath>
+  </defs>
+
+  <!-- the vessel -->
+  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="#0B2545" fill-opacity="0.07"/>
+
+  <!-- the diesel -->
+  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="#F2A93B" clip-path="url(#s-fill)"/>
+
+  <!-- continuous silhouette, drawn last so nothing interrupts it -->
+  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z"
+        fill="none" stroke="#0B2545" stroke-width="1.6" stroke-linejoin="round"/>
+
+</g>
+<text x="0" y="63.2" font-family="'Inter Variable','Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-weight="600" font-size="27.51" letter-spacing="-0.012em" fill="#0B2545">FuelPay</text>
+</svg>
