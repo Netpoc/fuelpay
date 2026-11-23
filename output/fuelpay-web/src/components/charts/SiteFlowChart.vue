@@ -15,7 +15,7 @@ import dayjs from 'dayjs'
 
 import '@/plugins/echarts'
 import { useTheme } from '@/composables/useTheme'
-import { chartTokens } from '@/theme/chart'
+import { chartTokens, CHART_FONT } from '@/theme/chart'
 import { litres } from '@/lib/format'
 import type { SiteFlowDay } from '@/lib/siteFlow'
 
@@ -47,6 +47,7 @@ const option = computed(() => {
 
   return {
     animation: false,
+    textStyle: { fontFamily: CHART_FONT },
     grid: { left: 8, right: 8, top: 30, bottom: 4, containLabel: true },
     legend: {
       top: 0,

@@ -13,6 +13,7 @@ import { onMounted, ref, watch } from 'vue'
 import L from 'leaflet'
 
 import { NIGERIA_BOUNDS, useLeafletMap } from '@/composables/useLeafletMap'
+import { BRAND } from '@/theme/tokens'
 
 export interface PickerPoint {
   id: string
@@ -47,7 +48,7 @@ function draw() {
   layer.clearLayers()
   if (props.polygon) {
     L.polygon(props.polygon, {
-      color: getComputedStyle(container.value!).getPropertyValue('--accent').trim() || '#f2a93b',
+      color: getComputedStyle(container.value!).getPropertyValue('--accent').trim() || BRAND.saffron,
       weight: 2,
       fillOpacity: 0.15,
     }).addTo(layer)
@@ -55,7 +56,7 @@ function draw() {
   for (const point of props.points) {
     L.circleMarker([point.lat, point.lon], {
       radius: 8,
-      color: '#fff',
+      color: BRAND.ivory,
       weight: 2,
       fillColor: point.color,
       fillOpacity: 1,

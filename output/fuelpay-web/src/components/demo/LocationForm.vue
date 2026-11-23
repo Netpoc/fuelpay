@@ -13,6 +13,7 @@ import { Alert, Button, Input, InputNumber, Select } from 'ant-design-vue'
 
 import PointPicker, { type PickerPoint } from './PointPicker.vue'
 import type { LocationInput, SiteProfile } from '@/api/types'
+import { BRAND } from '@/theme/tokens'
 
 const props = withDefaults(
   defineProps<{ maxGenerators?: number; submitting?: boolean; error?: string | null }>(),
@@ -81,7 +82,7 @@ function addGenerator() {
 
 const points = computed<PickerPoint[]>(() =>
   form.latitude !== undefined && form.longitude !== undefined
-    ? [{ id: 'site', lat: form.latitude, lon: form.longitude, label: form.name || 'Location', color: '#f2a93b' }]
+    ? [{ id: 'site', lat: form.latitude, lon: form.longitude, label: form.name || 'Location', color: BRAND.saffron }]
     : [],
 )
 

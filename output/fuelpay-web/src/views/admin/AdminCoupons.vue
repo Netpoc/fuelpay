@@ -198,7 +198,7 @@ async function submit() {
 .page { max-width: 82rem; margin: 0 auto; padding: 20px 16px 56px }
 @media (min-width: 768px) { .page { padding: 28px 28px 72px } }
 .mb { margin-bottom: 14px }
-.code { font-family: 'IBM Plex Mono', monospace; font-weight: 600 }
+.code { font-family: var(--font-mono); font-weight: 600 }
 .muted { font-size: 12px; color: var(--ink-muted) }
 .usage { display: flex; align-items: center; gap: 8px }
 .bar { flex: 1; height: 6px; border-radius: 3px; background: var(--surface-sunken); overflow: hidden; min-width: 60px }

@@ -22,7 +22,7 @@ import '@/plugins/echarts'
 import type { SeriesPoint } from '@/api/series'
 import type { Incident } from '@/lib/incidents'
 import { isFuelLoss } from '@/lib/incidents'
-import { chartTokens } from '@/theme/chart'
+import { chartTokens, CHART_FONT } from '@/theme/chart'
 import { useTheme } from '@/composables/useTheme'
 import { litres } from '@/lib/format'
 
@@ -171,6 +171,7 @@ const tableRows = computed(() => {
 
 const option = computed(() => ({
   animation: false,
+  textStyle: { fontFamily: CHART_FONT },
   backgroundColor: 'transparent',
   tooltip: {
     trigger: 'axis',

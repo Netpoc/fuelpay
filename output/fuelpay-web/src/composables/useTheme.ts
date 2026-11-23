@@ -10,6 +10,8 @@ export const THEME_STORAGE_KEY = 'fuelpay.theme'
 /**
  * Theme preference, resolved to a concrete mode.
  *
+ * Defaults to the Netpoc night theme; a stored choice always wins.
+ *
  * Tri-state on purpose: "auto" is a real answer, not an absence of one, and a
  * monitoring product gets used both in a bright office and on a night shift.
  *
@@ -24,7 +26,7 @@ export const THEME_STORAGE_KEY = 'fuelpay.theme'
  * and the attribute name.
  */
 export const useTheme = createSharedComposable(() => {
-  const preference = useStorage<ThemePreference>(THEME_STORAGE_KEY, 'auto')
+  const preference = useStorage<ThemePreference>(THEME_STORAGE_KEY, 'dark')
   const prefersDark = usePreferredDark()
 
   const resolved = computed<Mode>(() =>

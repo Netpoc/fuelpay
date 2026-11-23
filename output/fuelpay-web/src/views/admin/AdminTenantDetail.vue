@@ -297,7 +297,7 @@ const keyColumns: TableColumnsType = [
 .actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center }
 .mt { margin-top: 12px }
 .mb { margin-bottom: 12px }
-.mono { font-family: 'IBM Plex Mono', monospace; font-size: 12px }
+.mono { font-family: var(--font-mono); font-size: 12px }
 .list { list-style: none; margin: 6px 0 0; padding: 0 }
 .list li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0 }
 .list li + li { border-top: 1px solid var(--hairline) }

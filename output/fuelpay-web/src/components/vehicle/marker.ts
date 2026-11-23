@@ -6,6 +6,7 @@ import L from 'leaflet'
 
 import type { VehicleReading } from '@/api/types'
 import { OPERATION_SPEC, operationLabel } from '@/lib/operations'
+import { BRAND } from '@/theme/tokens'
 
 export function tractorIcon(name: string, latest: VehicleReading | null): L.DivIcon {
   const op = latest?.operation ?? 'OFF'
@@ -15,8 +16,8 @@ export function tractorIcon(name: string, latest: VehicleReading | null): L.DivI
   const label = `${name}: ${operationLabel(latest?.operation)}`.replace(/"/g, '&quot;')
   // Parked machines draw a disc: a heading is meaningless when standing still.
   const glyph = moving
-    ? `<path d="M14 3 L23 24 L14 19 L5 24 Z" fill="${color}" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>`
-    : `<circle cx="14" cy="14" r="8" fill="${color}" stroke="#fff" stroke-width="2.5"/>`
+    ? `<path d="M14 3 L23 24 L14 19 L5 24 Z" fill="${color}" stroke="${BRAND.ivory}" stroke-width="2" stroke-linejoin="round"/>`
+    : `<circle cx="14" cy="14" r="8" fill="${color}" stroke="${BRAND.ivory}" stroke-width="2.5"/>`
   return L.divIcon({
     html:
       `<span role="img" aria-label="${label}" style="display:block;width:28px;height:28px;` +

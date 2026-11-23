@@ -341,7 +341,7 @@ const ariaLabel = computed(() => {
 
       <!-- ---------- placard ---------- -->
       <g v-if="detailed">
-        <rect :x="CX - 54" y="130" width="108" height="38" rx="6" fill="#f5c518" class="placard" stroke-width="1.5" />
+        <rect :x="CX - 54" y="130" width="108" height="38" rx="6" fill="var(--np-saffron)" class="placard" stroke-width="1.5" />
         <text :x="CX" y="148" text-anchor="middle" class="placard-title">DIESEL</text>
         <text :x="CX" y="162" text-anchor="middle" class="placard-sub">
           {{ kind === 'BULK' ? 'AGO — bulk store' : 'AGO — flammable' }}
@@ -502,11 +502,11 @@ const ariaLabel = computed(() => {
   font-weight: 700;
   /* Fixed in both themes: this is a printed safety label on the tank, not a
      themed surface. */
-  fill: #1f2429;
+  fill: var(--np-night-2);
 }
 .placard-sub {
   font-size: 10px;
-  fill: #3f4750;
+  fill: var(--np-night-3);
 }
 
 .major line {

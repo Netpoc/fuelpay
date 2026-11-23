@@ -1,39 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="FuelPay">
-  <title>FuelPay level mark</title>
+  <title>FuelPay level mark — Netpoc edition</title>
   <!--
-    Geometry is exact, not eyeballed.
-      body circle  C = (16, 20), r = 9.5
-      apex         A = (16, 3),  d = |CA| = 17
-      tangent half-angle  beta = acos(r/d) = 56.03 deg
-      tangent points      (8.12, 14.69) and (23.88, 14.69)
-    large-arc = 1 (the arc spans 247.9 deg); sweep = 0 (counter-clockwise in
-    SVG's y-down space).
+    Geometry is exact (see fuelpay-brand/manual.html): body circle C=(16,20)
+    r=9.5, apex (16,3), tangent points (8.12,14.69) and (23.88,14.69). The
+    outline is drawn once, unbroken; only the fill is cut at y=18.1.
 
-    THE SILHOUETTE IS CONTINUOUS. An earlier version clipped the outline into
-    an upper and a lower half, which severed the shoulders where the tangents
-    meet the circle — and since those tangents are straight lines, the top half
-    became a bare triangle and the whole thing read as a funnel, not a droplet.
-    The teardrop's entire character lives in those shoulders.
-
-    So the outline is drawn once, unbroken, over everything. Only the FILL is
-    cut: amber below the surface, a 1.2-unit gap of empty vessel above it. The
-    gap is a knockout rather than a stroke because a stroke thins to nothing
-    when scaled down, whereas a gap between two fields survives.
-
-    Surface at y = 16.9 leaves ~62% fill by area — comfortably above any
-    reorder threshold, which is the promise the product makes.
+    Netpoc edition: the mark sits on a night tile so it reads on light and dark
+    browser chrome alike, the outline is ivory, and the diesel is the Ankara
+    saffron→coral pair.
   -->
   <defs>
     <clipPath id="lm-fill"><rect x="0" y="18.1" width="32" height="13.9"/></clipPath>
+    <linearGradient id="lm-diesel" x1="0" y1="18" x2="0" y2="29" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F7B733"/>
+      <stop offset="1" stop-color="#FF5E5B"/>
+    </linearGradient>
   </defs>
-
-  <!-- the vessel -->
-  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="#0B2545" fill-opacity="0.07"/>
-
-  <!-- the diesel -->
-  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="#F2A93B" clip-path="url(#lm-fill)"/>
-
-  <!-- continuous silhouette, drawn last so nothing interrupts it -->
-  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z"
-        fill="none" stroke="#0B2545" stroke-width="1.6" stroke-linejoin="round"/>
+  <rect width="32" height="32" rx="7" fill="#0B0A1A"/>
+  <g transform="translate(16 16.6) scale(0.86) translate(-16 -16)">
+    <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="#F5F2EA" fill-opacity="0.08"/>
+    <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="url(#lm-diesel)" clip-path="url(#lm-fill)"/>
+    <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="none" stroke="#F5F2EA" stroke-width="1.7" stroke-linejoin="round"/>
+  </g>
 </svg>

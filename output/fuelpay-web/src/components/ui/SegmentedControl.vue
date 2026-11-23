@@ -45,7 +45,7 @@ watch(
   display: flex; gap: 2px; padding: 3px;
   background: var(--surface-sunken);
   border: 1px solid var(--hairline);
-  border-radius: var(--radius-control);
+  border-radius: 999px;
   overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
   max-width: 100%;
 }
@@ -53,14 +53,14 @@ watch(
 .seg__item {
   flex: 0 0 auto; scroll-snap-align: center;
   padding: 6px 12px; min-height: 32px;
-  border: 0; border-radius: 4px; background: transparent;
+  border: 0; border-radius: 999px; background: transparent;
   font: inherit; font-size: 13px; color: var(--ink-muted); cursor: pointer;
   white-space: nowrap;
   transition: background var(--dur-micro) var(--ease-standard), color var(--dur-micro) var(--ease-standard);
 }
 .seg__item:hover { color: var(--ink) }
 .seg__item[aria-checked='true'] {
-  background: var(--surface-raised); color: var(--ink); font-weight: 600;
+  background: var(--interactive); color: var(--on-interactive); font-weight: 700;
   box-shadow: var(--elev-1);
 }
 </style>

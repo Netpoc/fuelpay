@@ -34,5 +34,5 @@ async function copy(value: string) {
 <style scoped>
 .reveal { display: flex; flex-direction: column; gap: 10px }
 .row { display: flex; gap: 8px }
-.mono :deep(input), .mono { font-family: 'IBM Plex Mono', monospace; font-size: 12px }
+.mono :deep(input), .mono { font-family: var(--font-mono); font-size: 12px }
 </style>

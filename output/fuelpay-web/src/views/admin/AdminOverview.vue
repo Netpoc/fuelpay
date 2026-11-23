@@ -16,7 +16,7 @@ import { getOverview } from '@/api/admin'
 import type { Overview } from '@/api/adminTypes'
 import type { EventType } from '@/api/types'
 import { EVENT_SPEC } from '@/lib/incidents'
-import { chartTokens } from '@/theme/chart'
+import { chartTokens, CHART_FONT } from '@/theme/chart'
 import { useTheme } from '@/composables/useTheme'
 import { dateTime } from '@/lib/adminFormat'
 
@@ -42,6 +42,7 @@ const { resolved } = useTheme()
 const C = computed(() => chartTokens(resolved.value))
 const option = computed(() => ({
   animation: false,
+  textStyle: { fontFamily: CHART_FONT },
   grid: { left: 36, right: 12, top: 16, bottom: 28 },
   tooltip: {
     trigger: 'axis',

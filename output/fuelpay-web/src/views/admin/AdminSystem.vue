@@ -39,8 +39,8 @@ async function load() {
 async function loadTuning() {
   tuning.value = await getTuning()
   draft.value = {
-    theft: { ...(tuning.value.overrides.theft ?? {}) },
-    vehicle: { ...(tuning.value.overrides.vehicle ?? {}) },
+    theft: { ...tuning.value.overrides.theft },
+    vehicle: { ...tuning.value.overrides.vehicle },
   }
 }
 let timer: ReturnType<typeof setInterval> | null = null
@@ -275,7 +275,7 @@ async function saveTuning(reset = false) {
 .strong { font-weight: 600 }
 .muted { font-size: 12px; color: var(--ink-muted) }
 .err { font-size: 12px; color: var(--status-critical-text) }
-.mono { font-family: 'IBM Plex Mono', monospace; font-size: 12px }
+.mono { font-family: var(--font-mono); font-size: 12px }
 .tabular { font-variant-numeric: tabular-nums; font-size: 13px }
 .list { list-style: none; margin: 8px 0 0; padding: 0 }
 .list li { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0 }

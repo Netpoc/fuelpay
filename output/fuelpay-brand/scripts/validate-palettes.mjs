@@ -15,7 +15,8 @@ import { fileURLToPath } from 'node:url'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
 const VALIDATOR =
-  '/private/tmp/claude-501/bundled-skills/2.1.220/c2fea51aff271f1e3bf279faa7208bc6/dataviz/scripts/validate_palette.js'
+  process.env.VALIDATOR ??
+  '/private/tmp/claude-501/bundled-skills/2.1.328/2109a0515b88c85893d1f6d8f28aa421/dataviz/scripts/validate_palette.js'
 
 const tokens = JSON.parse(await readFile(resolve(HERE, '../tokens/color.json'), 'utf8'))
 const s = tokens.status

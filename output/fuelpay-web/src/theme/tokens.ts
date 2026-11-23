@@ -25,11 +25,20 @@ export type StatusKey = 'ok' | 'watch' | 'low' | 'critical'
  * brand change would silently repaint every status in the product.
  */
 export const BRAND = {
-  navy: '#0B2545',
-  navyDeep: '#071A33',
-  amber: '#F2A93B',
-  amber600: '#D98E1F',
-  amber800: '#8A5A08',
+  // Netpoc palette — FuelPay is a Netpoc product and wears its system.
+  void: '#080714',
+  night: '#0B0A1A',
+  night2: '#14122B',
+  night3: '#1D1A3A',
+  ivory: '#F5F2EA',
+  mist: '#B6B2CF',
+  saffron: '#F7B733',
+  coral: '#FF5E5B',
+  terracotta: '#E06236',
+  terracottaDeep: '#A33F1B',
+  emerald: '#1FB58F',
+  violet: '#A64BF4',
+  indigo: '#5B6BFF',
 } as const
 
 /**
@@ -44,12 +53,12 @@ export const BRAND = {
 export const STATUS = {
   light: {
     ok: '#0E7C5A',
-    watch: '#D2760F',
-    low: '#D2760F',
-    critical: '#96161F',
+    watch: '#C9700C',
+    low: '#C9700C',
+    critical: '#A3172A',
   },
   dark: {
-    ok: '#2FA985',
+    ok: '#22A98A',
     watch: '#B78A20',
     low: '#B78A20',
     critical: '#CC2A46',
@@ -65,10 +74,10 @@ export const STATUS_TEXT = {
     critical: '#8E1420',
   },
   dark: {
-    ok: '#45C39C',
-    watch: '#E0B554',
-    low: '#E0B554',
-    critical: '#F58095',
+    ok: '#3FD0A8',
+    watch: '#F7B733',
+    low: '#F7B733',
+    critical: '#FF7F8A',
   },
 } as const satisfies Record<Mode, Record<StatusKey, string>>
 
@@ -91,18 +100,29 @@ export function antdThemeFor(mode: Mode): ThemeConfig {
     // named import fails at runtime.
     algorithm: mode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
     token: {
-      // Two values: the light navy is unreadable on a dark field once antd
-      // derives its hover and active states from it.
-      colorPrimary: mode === 'dark' ? '#3F8AD8' : '#123A63',
+      // Saffron on night (void text on the fill, 11.2:1). Saffron is
+      // illegible on ivory, so light mode uses deep terracotta — same Ankara
+      // family, white text 6.3:1.
+      colorPrimary: mode === 'dark' ? BRAND.saffron : BRAND.terracottaDeep,
+      colorTextLightSolid: mode === 'dark' ? BRAND.void : '#FFFFFF',
+      colorLink: mode === 'dark' ? BRAND.saffron : BRAND.terracottaDeep,
+      colorInfo: mode === 'dark' ? '#7480FF' : '#4450D8',
       colorSuccess: STATUS[mode].ok,
       colorWarning: STATUS[mode].watch,
       colorError: STATUS[mode].critical,
-      colorBgBase: mode === 'dark' ? '#0B1420' : '#F6F8FA',
-      colorTextBase: mode === 'dark' ? '#E9EFF6' : '#0B1B2B',
-      borderRadius: 6,
-      fontFamily:
-        "'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      colorBgBase: mode === 'dark' ? BRAND.night : '#F7F4EC',
+      colorBgContainer: mode === 'dark' ? BRAND.night2 : '#FFFDF8',
+      colorBgElevated: mode === 'dark' ? BRAND.night3 : '#FFFDF8',
+      colorTextBase: mode === 'dark' ? BRAND.ivory : BRAND.night2,
+      colorBorder: mode === 'dark' ? 'rgba(245,242,234,0.16)' : '#D2C8B3',
+      colorBorderSecondary: mode === 'dark' ? 'rgba(245,242,234,0.09)' : '#E4DDCD',
+      borderRadius: 10,
+      fontFamily: "'Manrope Variable', 'Manrope', ui-sans-serif, system-ui, sans-serif",
       fontSize: 14,
+    },
+    components: {
+      // Netpoc buttons are pills.
+      Button: { borderRadius: 999, borderRadiusLG: 999, borderRadiusSM: 999 },
     },
   }
 }

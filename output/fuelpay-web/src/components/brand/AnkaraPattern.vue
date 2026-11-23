@@ -1,0 +1,81 @@
+<script setup lang="ts">
+/**
+ * Ankara-inspired geometric band: concentric diamonds, dotted rows and
+ * radiating accents in the brand's wax-print palette. Used as a saturated
+ * counterpoint behind / beside frosted glass surfaces. Ported from the Netpoc
+ * site (src/components/AnkaraPattern.vue).
+ */
+import { useId } from 'vue'
+
+withDefaults(
+  defineProps<{
+    opacity?: number
+    scale?: number
+  }>(),
+  { opacity: 1, scale: 120 },
+)
+
+// Unique per instance: two fields on one page must not share a <pattern> id.
+const id = `ankara-${useId()}`
+</script>
+
+<template>
+  <svg class="ankara-field" :style="{ opacity }" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Tile is drawn on a 120-unit grid; `scale` resizes it. -->
+      <pattern
+        :id="id"
+        width="120"
+        height="120"
+        patternUnits="userSpaceOnUse"
+        :patternTransform="`scale(${scale / 120})`"
+      >
+        <!-- concentric diamonds -->
+        <g stroke-width="3" fill="none">
+          <rect
+            x="20"
+            y="20"
+            width="80"
+            height="80"
+            transform="rotate(45 60 60)"
+            stroke="var(--np-saffron)"
+          />
+          <rect
+            x="36"
+            y="36"
+            width="48"
+            height="48"
+            transform="rotate(45 60 60)"
+            stroke="var(--np-coral)"
+          />
+        </g>
+        <circle cx="60" cy="60" r="7" fill="var(--np-violet)" />
+        <!-- corner suns -->
+        <g fill="var(--np-emerald)">
+          <circle cx="0" cy="0" r="5" />
+          <circle cx="120" cy="0" r="5" />
+          <circle cx="0" cy="120" r="5" />
+          <circle cx="120" cy="120" r="5" />
+        </g>
+        <!-- radiating dashes -->
+        <g stroke="var(--np-saffron)" stroke-width="3" stroke-linecap="round">
+          <line x1="60" y1="6" x2="60" y2="20" />
+          <line x1="60" y1="100" x2="60" y2="114" />
+          <line x1="6" y1="60" x2="20" y2="60" />
+          <line x1="100" y1="60" x2="114" y2="60" />
+        </g>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" :fill="`url(#${id})`" />
+  </svg>
+</template>
+
+<style scoped>
+.ankara-field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+</style>

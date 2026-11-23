@@ -30,16 +30,16 @@
   </defs>
 
   <!-- the vessel -->
-  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="#0B2545" fill-opacity="0.07"/>
+  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="#14122B" fill-opacity="0.07"/>
 
   <!-- the diesel -->
-  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="#F2A93B" clip-path="url(#g-fill)"/>
+  <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z" fill="#F7B733" clip-path="url(#g-fill)"/>
 
   <!-- continuous silhouette, drawn last so nothing interrupts it -->
   <path d="M16 3 L8.12 14.69 A9.5 9.5 0 1 0 23.88 14.69 Z"
-        fill="none" stroke="#0B2545" stroke-width="1.6" stroke-linejoin="round"/>
+        fill="none" stroke="#14122B" stroke-width="1.6" stroke-linejoin="round"/>
 
 </g>
-<text x="30" y="63.2" font-family="'Inter Variable','Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-weight="600" font-size="27.51" letter-spacing="-0.012em" fill="#0B2545">FuelPay</text>
-<text x="0" y="79.1436" font-family="'Inter Variable','Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-weight="500" font-size="6.80" letter-spacing="0.08em" fill="#4B5A6E">FUEL TELEMETRY FOR GENERATOR FLEETS</text>
+<text x="30" y="63.2" font-family="'Bricolage Grotesque', 'Bricolage Grotesque Variable', Georgia, serif" font-weight="700" font-size="27.51" letter-spacing="-0.012em" fill="#14122B">FuelPay</text>
+<text x="0" y="79.1436" font-family="'Bricolage Grotesque', 'Bricolage Grotesque Variable', Georgia, serif" font-weight="500" font-size="6.80" letter-spacing="0.08em" fill="#4A4566">FUEL TELEMETRY FOR GENERATOR FLEETS</text>
 </svg>

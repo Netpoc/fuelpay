@@ -27,7 +27,7 @@ const label = computed(() =>
 <style scoped>
 .toggle {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px; border-radius: var(--radius-control);
+  width: 36px; height: 36px; border-radius: 999px;
   background: transparent; color: var(--ink-muted);
   border: 1px solid transparent; cursor: pointer;
   transition: background var(--dur-micro) var(--ease-standard), color var(--dur-micro) var(--ease-standard);

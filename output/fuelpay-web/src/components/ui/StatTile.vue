@@ -68,24 +68,47 @@ const shown = computed(() => {
 
 <style scoped>
 .tile {
-  background: var(--surface-raised);
+  position: relative;
+  background: var(--glass-bg), var(--surface-raised);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-card);
+  box-shadow: var(--glass-inset);
   padding: 14px 16px;
   min-width: 0;
+  overflow: hidden;
 }
+/* Netpoc mono kicker. */
 .eyebrow {
-  margin: 0 0 4px;
-  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  margin: 0 0 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
   /* Deliberately NOT muted: at 11px muted grey was the app's most widespread
      contrast failure. */
   color: var(--ink);
-  font-weight: 600;
+  font-weight: 400;
 }
-.value { font-weight: 600; display: block; }
+/* Display numerals; tabular so a ticking value does not jitter. */
+.value {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
 .sub { margin: 3px 0 0; font-size: 11px; color: var(--ink-muted); }
 .tile--ok .value { color: var(--status-ok-text) }
 .tile--watch .value { color: var(--status-watch-text) }
 .tile--critical .value { color: var(--status-critical-text) }
-.tile--primary { background: var(--surface-raised); }
+.tile--primary {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--hairline));
+}
+/* The headline tile carries the Ankara rule — the one bit of colour a
+   dashboard gets that is brand, not status. */
+.tile--primary::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: var(--np-ankara);
+}
 </style>

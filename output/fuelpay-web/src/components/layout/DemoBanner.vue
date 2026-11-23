@@ -49,31 +49,42 @@ const urgent = computed(() => (demo.status?.days_left ?? 99) <= 2)
 </template>
 
 <style scoped>
-.banner { background: #0b2545; color: #e9eff6; font-size: 13px }
+/* Brand strip: night-3 in both themes, like the gate panel. */
+.banner {
+  background: var(--np-night-3);
+  color: var(--np-ivory);
+  font-size: 13px;
+  border-bottom: 1px solid rgb(245 242 234 / 8%);
+}
 .banner__inner {
   display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px;
   max-width: 90rem; margin: 0 auto; padding: 7px 16px;
 }
 @media (min-width: 768px) { .banner__inner { padding: 7px 24px } }
 .tag {
-  padding: 1px 7px; border-radius: 999px; background: #f2a93b; color: #0b2545;
-  font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 2px 9px; border-radius: 999px;
+  background: var(--np-saffron); color: var(--np-void);
+  font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
 }
-.org { font-weight: 600 }
-.days { color: #9aabbe }
-.days.urgent { color: #f2a93b; font-weight: 600 }
-.gen { display: inline-flex; align-items: center; gap: 6px; color: #9aabbe }
+.org { font-weight: 700 }
+.days { font-family: var(--font-mono); font-size: 12px; color: var(--np-mist) }
+.days.urgent { color: var(--np-saffron); font-weight: 700 }
+.gen { display: inline-flex; align-items: center; gap: 6px; color: var(--np-mist) }
 .spin {
   width: 10px; height: 10px; border-radius: 50%;
-  border: 2px solid #9aabbe; border-top-color: transparent;
+  border: 2px solid var(--np-mist); border-top-color: transparent;
   animation: spin 0.9s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg) } }
 @media (prefers-reduced-motion: reduce) { .spin { animation: none } }
 .spacer { flex: 1 }
 .add {
-  color: #e9eff6; text-decoration: none; padding: 3px 10px;
-  border: 1px solid rgba(233, 239, 246, 0.3); border-radius: var(--radius-control);
+  color: var(--np-ivory); text-decoration: none; padding: 4px 12px;
+  border: 1px solid rgb(245 242 234 / 28%); border-radius: 999px;
+  font-weight: 600; font-size: 12.5px;
+  transition: border-color var(--dur-micro) var(--ease-standard), color var(--dur-micro) var(--ease-standard),
+    background var(--dur-micro) var(--ease-standard);
 }
-.add:hover { border-color: #f2a93b; color: #f2a93b }
+.add:hover { border-color: var(--np-saffron); color: var(--np-saffron); background: rgb(247 183 51 / 8%) }
 </style>

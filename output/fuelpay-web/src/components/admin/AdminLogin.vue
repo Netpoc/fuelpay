@@ -4,6 +4,8 @@ import { ref } from 'vue'
 import { Alert, Button, Input, InputPassword } from 'ant-design-vue'
 
 import AppLogo from '@/components/ui/AppLogo.vue'
+import BrandBackdrop from '@/components/brand/BrandBackdrop.vue'
+import NsibidiGlossary from '@/components/brand/NsibidiGlossary.vue'
 import { useAdminAuthStore } from '@/stores/adminAuth'
 
 const admin = useAdminAuthStore()
@@ -22,7 +24,8 @@ async function submit() {
 
 <template>
   <div class="wrap">
-    <form class="card" @submit.prevent="submit">
+    <BrandBackdrop :nsibidi="0.05" ankara="band" band-side="bottom" ink="var(--ink)" />
+    <form class="card glass-strong" @submit.prevent="submit">
       <div class="brand">
         <AppLogo :size="26" />
         <span class="badge">Admin</span>
@@ -47,25 +50,34 @@ async function submit() {
         No account yet? An owner adds you, or run
         <code>python -m app.cli create-admin</code> on the server.
       </p>
+      <NsibidiGlossary class="gloss" />
     </form>
   </div>
 </template>
 
 <style scoped>
-.wrap { min-height: 100vh; display: grid; place-items: center; padding: 24px 16px; background: var(--surface) }
+.wrap {
+  position: relative; isolation: isolate;
+  min-height: 100vh; display: grid; place-items: center; padding: 24px 16px 72px;
+  background: var(--surface);
+}
+.wrap > :deep(.backdrop) { z-index: -1 }
+:root[data-theme='light'] .wrap > :deep(.backdrop .aurora) { opacity: 0.45 }
 .card {
-  width: 100%; max-width: 24rem; display: flex; flex-direction: column; gap: 14px;
-  padding: 28px 24px; background: var(--surface-raised);
-  border: 1px solid var(--hairline); border-radius: var(--radius-panel);
+  width: 100%; max-width: 25rem; display: flex; flex-direction: column; gap: 14px;
+  padding: 30px 26px;
+  border-radius: var(--radius-panel);
+  box-shadow: var(--elev-2), var(--glass-inset);
 }
 .brand { display: flex; align-items: center; gap: 10px; color: var(--ink) }
 .badge {
-  padding: 1px 8px; border-radius: 999px; background: #0b2545; color: #f2a93b;
-  font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 2px 9px; border-radius: 999px; background: var(--np-night-3); color: var(--np-saffron);
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
 }
-h1 { margin: 6px 0 0; font-size: 22px; font-weight: 600 }
+h1 { margin: 6px 0 0; font-size: 28px; font-weight: 800; letter-spacing: -0.03em }
 .sub { margin: -8px 0 4px; font-size: 13px; color: var(--ink-muted) }
-.field { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600 }
+.field { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700 }
 .hint { margin: 4px 0 0; font-size: 12px; color: var(--ink-muted) }
-code { font-size: 11px }
+code { font-family: var(--font-mono); font-size: 11px }
+.gloss { margin-top: 8px; padding-top: 14px; border-top: 1px solid var(--hairline) }
 </style>

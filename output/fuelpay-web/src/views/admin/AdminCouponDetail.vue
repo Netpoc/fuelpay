@@ -162,6 +162,6 @@ const columns: TableColumnsType = [
 .control + .control { border-top: 1px solid var(--hairline) }
 .strong { font-weight: 600; font-size: 14px }
 .muted { font-size: 12px; color: var(--ink-muted) }
-.mono { font-family: 'IBM Plex Mono', monospace; word-break: break-all }
+.mono { font-family: var(--font-mono); word-break: break-all }
 .inline { display: flex; gap: 8px; flex: none }
 </style>

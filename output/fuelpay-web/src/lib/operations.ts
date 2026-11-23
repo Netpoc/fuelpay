@@ -9,15 +9,17 @@
 import type { VehicleOperation } from '@/api/types'
 
 export const OPERATION_SPEC: Record<VehicleOperation, { label: string; color: string; work: boolean }> = {
-  PLOUGHING: { label: 'Ploughing', color: '#c0622a', work: true },
-  HARROWING: { label: 'Harrowing', color: '#c99a2e', work: true },
-  SOWING: { label: 'Sowing', color: '#2f9e6b', work: true },
-  SPRAYING: { label: 'Spraying', color: '#2a78d6', work: true },
-  TRANSPORT: { label: 'Haulage', color: '#8a63d2', work: true },
-  TRANSIT: { label: 'On the road', color: '#64748b', work: false },
-  IDLE: { label: 'Idling', color: '#94a3b8', work: false },
-  REFUELING: { label: 'Refuelling', color: '#0e7c5a', work: false },
-  OFF: { label: 'Parked', color: '#94a3b8', work: false },
+  // Ankara accent set: terracotta, saffron, green, indigo, violet; idle
+  // states in Netpoc mist so working operations always read loudest.
+  PLOUGHING: { label: 'Ploughing', color: '#E06236', work: true },
+  HARROWING: { label: 'Harrowing', color: '#D99A1E', work: true },
+  SOWING: { label: 'Sowing', color: '#3BA55C', work: true },
+  SPRAYING: { label: 'Spraying', color: '#5B6BFF', work: true },
+  TRANSPORT: { label: 'Haulage', color: '#A64BF4', work: true },
+  TRANSIT: { label: 'On the road', color: '#7D78A0', work: false },
+  IDLE: { label: 'Idling', color: '#A8A3C4', work: false },
+  REFUELING: { label: 'Refuelling', color: '#14A3A0', work: false },
+  OFF: { label: 'Parked', color: '#A8A3C4', work: false },
 }
 
 export const operationLabel = (op: VehicleOperation | undefined | null) =>

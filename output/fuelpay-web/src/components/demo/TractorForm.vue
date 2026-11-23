@@ -13,6 +13,7 @@ import { Alert, Button, Input, InputNumber, Select, Slider } from 'ant-design-vu
 import PointPicker, { type PickerPoint } from './PointPicker.vue'
 import { fieldPolygon, haversineM, hectares } from '@/lib/field'
 import type { FieldOperation, TractorInput } from '@/api/types'
+import { BRAND } from '@/theme/tokens'
 
 withDefaults(defineProps<{ submitting?: boolean; error?: string | null }>(), {
   submitting: false,
@@ -70,8 +71,8 @@ const polygon = computed(() =>
 )
 
 const points = computed<PickerPoint[]>(() => [
-  ...(form.yard ? [{ id: 'yard', ...form.yard, label: 'Yard', color: '#5a6879' }] : []),
-  ...(form.field ? [{ id: 'field', ...form.field, label: 'Field', color: '#f2a93b' }] : []),
+  ...(form.yard ? [{ id: 'yard', ...form.yard, label: 'Yard', color: BRAND.mist }] : []),
+  ...(form.field ? [{ id: 'field', ...form.field, label: 'Field', color: BRAND.saffron }] : []),
 ])
 
 const distanceKm = computed(() =>
@@ -234,8 +235,8 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0 }
   border-radius: var(--radius-control); cursor: pointer;
 }
 .seg__btn--on { color: var(--ink); border-color: var(--accent); font-weight: 600 }
-.dot { width: 10px; height: 10px; border-radius: 50%; background: #5a6879 }
-.dot[data-which='field'] { background: #f2a93b }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--np-mist) }
+.dot[data-which='field'] { background: var(--np-saffron) }
 .set { color: var(--status-ok-text) }
 .note { margin: 0; font-size: 12px; color: var(--ink-muted) }
 .problems { margin: 0; padding-left: 18px; font-size: 12px; color: var(--status-watch-text) }

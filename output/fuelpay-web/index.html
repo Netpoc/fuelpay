@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,8 +14,7 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon-180.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#0B2545" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0B1420" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0B0A1A" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="FuelPay — fleet fuel monitoring" />
@@ -37,7 +36,7 @@
     <script>
       ;(function () {
         try {
-          var stored = localStorage.getItem('fuelpay.theme') || 'auto'
+          var stored = localStorage.getItem('fuelpay.theme') || 'dark'
           var mode =
             stored === 'auto'
               ? matchMedia('(prefers-color-scheme: dark)').matches
@@ -48,17 +47,17 @@
           root.dataset.theme = mode
           root.style.colorScheme = mode
         } catch (e) {
-          /* storage disabled — light is a fine default */
+          /* storage disabled — the night theme (default) stays */
         }
       })()
     </script>
     <!-- Paints the page background before the stylesheet has loaded. -->
     <style>
       html {
-        background: #f6f8fa;
+        background: #0b0a1a;
       }
-      html[data-theme='dark'] {
-        background: #0b1420;
+      html[data-theme='light'] {
+        background: #f7f4ec;
       }
     </style>
   </head>

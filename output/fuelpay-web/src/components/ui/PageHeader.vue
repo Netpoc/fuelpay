@@ -29,9 +29,16 @@ defineProps<{ title: string; subtitle?: string; backTo?: string; backLabel?: str
   font-size: 12px; color: var(--ink-muted); margin-bottom: 8px;
   min-height: 32px;
 }
-.back:hover { color: var(--ink) }
+.back:hover { color: var(--interactive) }
 .bar { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px }
-.title { margin: 0; font-size: 24px; line-height: 1.25; letter-spacing: -0.015em; font-weight: 600 }
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
 .sub { margin: 4px 0 0; font-size: 13px; color: var(--ink-muted) }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px }
 </style>

@@ -1,87 +1,90 @@
 {
-  "$comment": "FuelPay colour system. Every categorical/status set here is verified by scripts/validate-palettes.mjs, which exits non-zero on any failure. Re-run it after ANY change to these values.",
-
+  "$comment": "FuelPay colour system — Netpoc edition (FuelPay is a Netpoc product and wears its brand: African-night surfaces, Ankara accents). Every categorical/status set here is verified by scripts/validate-palettes.mjs, which exits non-zero on any failure. Re-run it after ANY change to these values.",
   "brand": {
-    "$comment": "Identity only. Never used to signal a status — that separation is the whole point, since the previous system had brand, ok and info all set to the same teal.",
-    "ink-900": "#071A33",
-    "ink-800": "#0B2545",
-    "amber": "#F2A93B",
-    "amber-600": "#D98E1F",
-    "amber-800": "#8A5A08"
+    "$comment": "Netpoc palette. Identity only — never used to signal a status. Saffron is the accent; status colours below are separate and colourblind-validated.",
+    "void": "#080714",
+    "night": "#0B0A1A",
+    "night-2": "#14122B",
+    "night-3": "#1D1A3A",
+    "ivory": "#F5F2EA",
+    "mist": "#B6B2CF",
+    "muted": "#948FB6",
+    "saffron": "#F7B733",
+    "coral": "#FF5E5B",
+    "terracotta": "#E06236",
+    "terracotta-deep": "#A33F1B",
+    "emerald": "#1FB58F",
+    "violet": "#A64BF4",
+    "indigo": "#5B6BFF"
   },
-
   "interactive": {
-    "$comment": "Links and primary controls. Two values because the light navy is unreadable on a dark field once antd derives hover states from it.",
-    "light": "#123A63",
-    "dark": "#3F8AD8"
+    "$comment": "Links and primary controls. Saffron on night (void text on fills); saffron is illegible on ivory, so light mode uses deep terracotta (6.3:1).",
+    "light": "#A33F1B",
+    "dark": "#F7B733"
   },
-
   "neutral": {
     "light": {
-      "surface": "#F6F8FA",
-      "surface-raised": "#FFFFFF",
-      "surface-sunken": "#EEF2F6",
-      "ink": "#0B1B2B",
-      "ink-muted": "#4B5A6E",
-      "ink-subtle": "#5A6879",
-      "hairline": "#DDE4EC",
-      "hairline-strong": "#C6D0DC"
+      "surface": "#F7F4EC",
+      "surface-raised": "#FFFDF8",
+      "surface-sunken": "#EFEADF",
+      "ink": "#14122B",
+      "ink-muted": "#4A4566",
+      "ink-subtle": "#5B5677",
+      "hairline": "#E4DDCD",
+      "hairline-strong": "#D2C8B3"
     },
     "dark": {
-      "surface": "#0B1420",
-      "surface-raised": "#121C2A",
-      "surface-sunken": "#070E17",
-      "ink": "#E9EFF6",
-      "ink-muted": "#9AAABE",
-      "ink-subtle": "#7B8CA3",
-      "hairline": "#1E2A3A",
-      "hairline-strong": "#2C3A4D"
+      "surface": "#0B0A1A",
+      "surface-raised": "#14122B",
+      "surface-sunken": "#080714",
+      "ink": "#F5F2EA",
+      "ink-muted": "#B6B2CF",
+      "ink-subtle": "#948FB6",
+      "hairline": "rgba(245,242,234,0.10)",
+      "hairline-strong": "rgba(245,242,234,0.18)"
     }
   },
-
   "status": {
     "$comment": "THREE hues, not four. A four-step traffic-light ramp cannot pass colourblind validation: the amber pair collapses to deltaE 1.3 under deuteranopia — they are metamers. 'watch' and 'low' therefore share a hue and differ by FILL WEIGHT (soft tint vs solid) plus their always-present text label. See reports/palette-validation.txt.",
     "light": {
       "ok": "#0E7C5A",
-      "watch": "#D2760F",
-      "low": "#D2760F",
-      "critical": "#96161F",
+      "watch": "#C9700C",
+      "low": "#C9700C",
+      "critical": "#A3172A",
       "ok-text": "#0B6448",
       "watch-text": "#8A5A08",
       "low-text": "#8A5A08",
       "critical-text": "#8E1420"
     },
     "dark": {
-      "ok": "#2FA985",
+      "ok": "#22A98A",
       "watch": "#B78A20",
       "low": "#B78A20",
       "critical": "#CC2A46",
-      "ok-text": "#45C39C",
-      "watch-text": "#E0B554",
-      "low-text": "#E0B554",
-      "critical-text": "#F58095"
+      "ok-text": "#3FD0A8",
+      "watch-text": "#F7B733",
+      "low-text": "#F7B733",
+      "critical-text": "#FF7F8A"
     },
     "weight": {
       "watch": "soft",
       "low": "solid"
     }
   },
-
   "chart": {
-    "$comment": "The load trace is achromatic on purpose. Fuel and load are drawn in separate stacked grids and never overlap, so a second hue was decoration — and dropping it removes a pair from the colourblind pairlist entirely.",
+    "$comment": "Fuel is Netpoc indigo so it never shares a hue with saffron (accent) or watch. The load trace stays achromatic.",
     "light": {
-      "fuel": "#2a78d6",
-      "load": "#5A6879"
+      "fuel": "#4450D8",
+      "load": "#5B5677"
     },
     "dark": {
-      "fuel": "#3987e5",
-      "load": "#94A3B8"
+      "fuel": "#7480FF",
+      "load": "#948FB6"
     }
   },
-
   "focus": {
-    "$comment": "Amber, so the focus ring is unmistakably ours and never collides with a status colour.",
-    "light": "#B5730A",
-    "dark": "#F2A93B"
+    "$comment": "Saffron on night, deep terracotta on ivory — unmistakably ours.",
+    "light": "#A33F1B",
+    "dark": "#F7B733"
   }
 }

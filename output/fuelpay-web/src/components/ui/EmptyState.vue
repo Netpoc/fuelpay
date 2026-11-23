@@ -14,6 +14,6 @@ defineProps<{ title: string; description?: string }>()
 <style scoped>
 .empty { padding: 40px 20px; text-align: center; }
 .icon :deep(svg) { margin: 0 auto 14px; }
-.title { margin: 0; font-weight: 600; }
+.title { margin: 0; font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.015em; }
 .desc { margin: 6px auto 0; max-width: 44ch; font-size: 13px; color: var(--ink-muted); }
 </style>

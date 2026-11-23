@@ -34,44 +34,50 @@ export interface ChartTokens {
   zoomFill: string
 }
 
+// Fuel is drawn in Netpoc indigo: it must not share a hue with any status
+// (saffron is both the brand accent and close to `watch`), and indigo passes
+// the colourblind gate alongside the three status marks.
 const LIGHT: ChartTokens = {
-  axis: '#C6D0DC',
-  split: '#EEF2F6',
-  text: '#4B5A6E',
-  textStrong: '#0B1B2B',
-  tooltipBg: '#FFFFFF',
-  tooltipBorder: '#DDE4EC',
-  markHalo: '#FFFFFF',
-  fuel: '#2a78d6',
-  fuelArea: 'rgba(42,120,214,0.10)',
-  load: '#5A6879',
-  loadArea: 'rgba(90,104,121,0.09)',
+  axis: '#D2C8B3',
+  split: '#EFEADF',
+  text: '#4A4566',
+  textStrong: '#14122B',
+  tooltipBg: '#FFFDF8',
+  tooltipBorder: '#E4DDCD',
+  markHalo: '#FFFDF8',
+  fuel: '#4450D8',
+  fuelArea: 'rgba(68,80,216,0.10)',
+  load: '#5B5677',
+  loadArea: 'rgba(91,86,119,0.09)',
   ok: '#0E7C5A',
-  watch: '#D2760F',
-  critical: '#96161F',
-  bandDrain: 'rgba(150,22,31,0.13)',
+  watch: '#C9700C',
+  critical: '#A3172A',
+  bandDrain: 'rgba(163,23,42,0.12)',
   bandRefill: 'rgba(14,124,90,0.11)',
-  zoomFill: 'rgba(42,120,214,0.10)',
+  zoomFill: 'rgba(68,80,216,0.10)',
 }
 
 const DARK: ChartTokens = {
-  axis: '#2C3A4D',
-  split: '#1A2534',
-  text: '#9AAABE',
-  textStrong: '#E9EFF6',
-  tooltipBg: '#121C2A',
-  tooltipBorder: '#2C3A4D',
-  markHalo: '#121C2A',
-  fuel: '#3987e5',
-  fuelArea: 'rgba(57,135,229,0.14)',
-  load: '#94A3B8',
-  loadArea: 'rgba(148,163,184,0.10)',
-  ok: '#2FA985',
+  axis: 'rgba(245,242,234,0.18)',
+  split: 'rgba(245,242,234,0.07)',
+  text: '#B6B2CF',
+  textStrong: '#F5F2EA',
+  tooltipBg: '#1D1A3A',
+  tooltipBorder: 'rgba(245,242,234,0.16)',
+  markHalo: '#14122B',
+  fuel: '#7480FF',
+  fuelArea: 'rgba(116,128,255,0.16)',
+  load: '#948FB6',
+  loadArea: 'rgba(148,143,182,0.10)',
+  ok: '#22A98A',
   watch: '#B78A20',
   critical: '#CC2A46',
   bandDrain: 'rgba(204,42,70,0.20)',
-  bandRefill: 'rgba(47,169,133,0.16)',
-  zoomFill: 'rgba(57,135,229,0.14)',
+  bandRefill: 'rgba(34,169,138,0.16)',
+  zoomFill: 'rgba(116,128,255,0.16)',
 }
 
 export const chartTokens = (mode: Mode): ChartTokens => (mode === 'dark' ? DARK : LIGHT)
+
+/** Canvas text can't read CSS vars either: Netpoc's Manrope, by name. */
+export const CHART_FONT = "'Manrope Variable', 'Manrope', ui-sans-serif, system-ui, sans-serif"

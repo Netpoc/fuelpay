@@ -17,7 +17,7 @@ import VChart from 'vue-echarts'
 import '@/plugins/echarts'
 import type { Event, VehicleSeriesPoint } from '@/api/types'
 import { EVENT_SPEC, isFuelLoss } from '@/lib/incidents'
-import { chartTokens } from '@/theme/chart'
+import { chartTokens, CHART_FONT } from '@/theme/chart'
 import { useTheme } from '@/composables/useTheme'
 import { litres } from '@/lib/format'
 
@@ -76,6 +76,7 @@ const markers = computed(() =>
 
 const option = computed(() => ({
   animation: false,
+  textStyle: { fontFamily: CHART_FONT },
   grid: [
     { left: narrow.value ? 44 : 56, right: narrow.value ? 44 : 56, top: 24, height: '50%' },
     { left: narrow.value ? 44 : 56, right: narrow.value ? 44 : 56, top: '68%', height: '20%' },

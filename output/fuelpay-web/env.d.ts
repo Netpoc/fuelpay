@@ -15,6 +15,12 @@ interface ImportMetaEnv {
    */
   readonly VITE_MAP_TILES_LIGHT?: string
   readonly VITE_MAP_TILES_DARK?: string
+  /**
+   * Netpoc corporate site origin, e.g. https://netpoc.com — no trailing slash.
+   * Powers the "No code yet? Book a PoC" links back to netpoc's /fuelpay page.
+   * Unset → those links are hidden rather than pointing nowhere.
+   */
+  readonly VITE_NETPOC_URL?: string
 }
 
 interface ImportMeta {

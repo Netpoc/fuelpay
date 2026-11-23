@@ -31,10 +31,14 @@ const PAD = { none: '', sm: 'p-3', md: 'p-4 sm:p-5', lg: 'p-5 sm:p-6' }
 
 <style scoped>
 .card {
-  background: var(--surface-raised);
+  /* Netpoc glass, flattened: the sheen gradient sits over the solid raised
+     surface instead of blurring what is behind it. Dashboards render dozens
+     of cards over a plain field, where backdrop-filter costs frames and adds
+     nothing. */
+  background: var(--glass-bg), var(--surface-raised);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-card);
-  box-shadow: var(--elev-1);
+  box-shadow: var(--elev-1), var(--glass-inset);
   color: inherit;
 }
 /* A live incident outranks a merely low tank, so the two tones differ in
@@ -49,12 +53,16 @@ const PAD = { none: '', sm: 'p-3', md: 'p-4 sm:p-5', lg: 'p-5 sm:p-6' }
 .card--interactive {
   display: block;
   transition:
-    box-shadow var(--dur-micro) var(--ease-standard),
-    transform var(--dur-micro) var(--ease-standard);
+    box-shadow var(--dur-surface) var(--ease-out-expo),
+    border-color var(--dur-surface) var(--ease-out-expo),
+    transform var(--dur-surface) var(--ease-out-expo);
 }
 .card--interactive:hover {
-  box-shadow: var(--elev-2);
-  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--hairline));
+  box-shadow:
+    var(--elev-2),
+    0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent);
+  transform: translateY(-2px);
 }
 .card--interactive:active {
   transform: translateY(0);

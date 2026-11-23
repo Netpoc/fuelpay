@@ -23,6 +23,9 @@ import { createLocation, createTractor, redeemCoupon } from '@/api/demo'
 import type { LocationInput, Provisioned, RedeemResult, TractorInput } from '@/api/types'
 import { useAuthStore } from '@/stores/auth'
 import { useDemoStore } from '@/stores/demo'
+import BrandBackdrop from '@/components/brand/BrandBackdrop.vue'
+import NsibidiGlossary from '@/components/brand/NsibidiGlossary.vue'
+import { bookPocHref } from '@/lib/netpoc'
 
 type Step = 'code' | 'key' | 'choose' | 'location' | 'tractor' | 'generating' | 'not-demo'
 
@@ -36,6 +39,19 @@ const busy = ref(false)
 const error = ref<string | null>(null)
 
 const code = ref(typeof route.query.code === 'string' ? route.query.code : '')
+
+/**
+ * Netpoc's FuelPay page sends visitors here with `?segment=` for the operation
+ * they were reading about. It is a hint, not a route: it highlights the
+ * matching choice at "What to monitor" and never skips a step.
+ */
+const preferred = computed<'location' | 'tractor' | null>(() => {
+  const s = route.query.segment
+  if (s === 'tractors') return 'tractor'
+  if (s === 'towers' || s === 'enterprise') return 'location'
+  return null
+})
+const BOOK_POC = bookPocHref('demo-wizard')
 const company = ref('')
 const email = ref('')
 const issued = ref<RedeemResult | null>(null)
@@ -163,6 +179,7 @@ watch(step, () => {
 
 <template>
   <div class="wizard">
+    <BrandBackdrop :nsibidi="0.05" ankara="none" ink="var(--ink)" class="wizard__backdrop" />
     <header class="top">
       <RouterLink :to="auth.isAuthenticated ? '/fleet' : '/'" aria-label="FuelPay home">
         <AppLogo :size="26" />
@@ -183,7 +200,7 @@ watch(step, () => {
         </li>
       </ol>
 
-      <section class="card">
+      <section class="card glass-strong">
         <!-- 1. Code -->
         <template v-if="step === 'code'">
           <h1>Start your FuelPay demo</h1>
@@ -217,6 +234,9 @@ watch(step, () => {
             >
           </form>
           <p class="aside">Already have a key? <RouterLink to="/fleet">Sign in</RouterLink></p>
+          <p v-if="BOOK_POC" class="aside">
+            No code yet? <a :href="BOOK_POC">Book a 60-day PoC with Netpoc ↗</a>
+          </p>
         </template>
 
         <!-- 2. Key -->
@@ -247,9 +267,11 @@ watch(step, () => {
             <button
               type="button"
               class="choice"
+              :class="{ 'choice--preferred': preferred === 'location' }"
               :disabled="!demo.canAddLocation"
               @click="step = 'location'"
             >
+              <span v-if="preferred === 'location'" class="pill choice__tag">Your pick on netpoc</span>
               <svg viewBox="0 0 48 48" class="choice__icon" aria-hidden="true">
                 <rect x="10" y="10" width="28" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="2.2" />
                 <rect x="10" y="24" width="28" height="16" rx="0" fill="var(--accent)" opacity=".55" />
@@ -264,9 +286,11 @@ watch(step, () => {
             <button
               type="button"
               class="choice"
+              :class="{ 'choice--preferred': preferred === 'tractor' }"
               :disabled="!demo.canAddTractor"
               @click="step = 'tractor'"
             >
+              <span v-if="preferred === 'tractor'" class="pill choice__tag">Your pick on netpoc</span>
               <svg viewBox="0 0 48 48" class="choice__icon" aria-hidden="true">
                 <circle cx="14" cy="34" r="7" fill="none" stroke="currentColor" stroke-width="2.2" />
                 <circle cx="36" cy="36" r="5" fill="none" stroke="currentColor" stroke-width="2.2" />
@@ -347,53 +371,72 @@ watch(step, () => {
           </div>
         </template>
       </section>
+
+      <NsibidiGlossary class="gloss" />
     </main>
   </div>
 </template>
 
 <style scoped>
-.wizard { min-height: 100vh; background: var(--surface) }
+.wizard { position: relative; isolation: isolate; min-height: 100vh; background: var(--surface) }
+.wizard__backdrop { position: fixed; z-index: -1 }
+/* The aurora is tuned for night; on ivory it is a whisper. */
+:root[data-theme='light'] .wizard__backdrop { opacity: 0.45 }
+/* Ankara edge, as on the app header. */
+.wizard::before {
+  content: ''; position: fixed; inset: 0 0 auto; height: 3px; z-index: 2;
+  background: var(--np-ankara);
+}
 .top {
   display: flex; align-items: center; justify-content: space-between;
-  max-width: 52rem; margin: 0 auto; padding: 14px 16px;
+  max-width: 52rem; margin: 0 auto; padding: 18px 16px 14px;
 }
 .top a { color: var(--ink) }
 .body { max-width: 52rem; margin: 0 auto; padding: 0 16px 56px }
 
 .steps {
-  display: flex; gap: 6px; list-style: none; margin: 4px 0 16px; padding: 0;
+  display: flex; gap: 6px; list-style: none; margin: 4px 0 18px; padding: 0;
   overflow-x: auto; scrollbar-width: none;
 }
 .steps li {
-  display: flex; align-items: center; gap: 6px; flex: none;
-  font-size: 12px; color: var(--ink-subtle);
+  display: flex; align-items: center; gap: 7px; flex: none;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-subtle);
 }
 .steps li + li::before { content: ''; width: 18px; height: 1px; background: var(--hairline-strong) }
 .num {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 22px; height: 22px; border-radius: 50%;
-  border: 1px solid var(--hairline-strong); font-size: 11px; font-weight: 600;
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 1px solid var(--hairline-strong); font-size: 11px; font-weight: 700;
+  transition: background var(--dur-surface) var(--ease-out-expo), border-color var(--dur-surface) var(--ease-out-expo);
 }
-.steps .current { color: var(--ink); font-weight: 600 }
-.steps .current .num { background: var(--accent); border-color: var(--accent); color: #0b2545 }
+.steps .current { color: var(--ink); font-weight: 700 }
+.steps .current .num {
+  background: var(--np-saffron); border-color: var(--np-saffron); color: var(--np-void);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--np-saffron) 22%, transparent);
+}
 .steps .done .num { background: var(--status-ok); border-color: var(--status-ok); color: var(--on-solid) }
 .txt { display: none }
 @media (min-width: 640px) { .txt { display: inline } }
 .steps .current .txt { display: inline }
 
 .card {
-  background: var(--surface-raised); border: 1px solid var(--hairline);
-  border-radius: var(--radius-panel); padding: 22px 18px;
+  border-radius: var(--radius-panel); padding: 24px 18px;
+  box-shadow: var(--elev-2), var(--glass-inset);
+  animation: reveal-in 0.6s var(--ease-out-expo) both;
 }
-@media (min-width: 768px) { .card { padding: 32px 36px } }
-h1 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.015em }
-.sub { margin: 6px 0 22px; font-size: 14px; color: var(--ink-muted); max-width: 60ch }
+@media (min-width: 768px) { .card { padding: 36px 40px } }
+h1 { margin: 0; font-size: clamp(26px, 3.4vw, 34px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.06 }
+.sub { margin: 10px 0 24px; font-size: 14.5px; line-height: 1.55; color: var(--ink-muted); max-width: 60ch }
 .stack { display: flex; flex-direction: column; gap: 14px; max-width: 26rem }
 .field { display: flex; flex-direction: column; gap: 6px }
-.label { font-size: 13px; font-weight: 600 }
+.label { font-size: 13px; font-weight: 700 }
 .opt { font-weight: 400; color: var(--ink-muted) }
-.mono :deep(input), .mono { font-family: var(--font-mono, 'IBM Plex Mono', monospace) }
+.mono :deep(input), .mono { font-family: var(--font-mono) }
 .aside { margin: 18px 0 0; font-size: 13px; color: var(--ink-muted) }
+.aside + .aside { margin-top: 6px }
+.aside a { color: var(--interactive); font-weight: 600 }
+.aside a:hover { text-decoration: underline; text-underline-offset: 3px }
 
 .keyrow { display: flex; gap: 8px; margin-bottom: 14px }
 .facts { margin: 0 0 20px; padding-left: 18px; font-size: 14px; color: var(--ink-muted) }
@@ -401,24 +444,41 @@ h1 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.015em }
 .choices { display: grid; gap: 12px; grid-template-columns: 1fr }
 @media (min-width: 640px) { .choices { grid-template-columns: 1fr 1fr } }
 .choice {
+  position: relative;
   display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left;
-  padding: 18px; min-height: 180px;
+  padding: 20px; min-height: 190px;
   font: inherit; color: var(--ink);
-  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-card);
+  background: var(--glass-bg), var(--surface-raised);
+  border: 1px solid var(--hairline-strong); border-radius: var(--radius-card);
+  box-shadow: var(--glass-inset);
   cursor: pointer;
-  transition: border-color var(--dur-micro) var(--ease-standard), transform var(--dur-micro) var(--ease-standard);
+  transition:
+    border-color var(--dur-surface) var(--ease-out-expo),
+    transform var(--dur-surface) var(--ease-out-expo),
+    box-shadow var(--dur-surface) var(--ease-out-expo);
 }
-.choice:hover:not(:disabled) { border-color: var(--accent); transform: translateY(-1px) }
+.choice:hover:not(:disabled) {
+  border-color: var(--interactive);
+  transform: translateY(-4px);
+  box-shadow: var(--elev-2), 0 0 0 1px color-mix(in srgb, var(--interactive) 30%, transparent);
+}
+.choice--preferred { border-color: color-mix(in srgb, var(--interactive) 70%, transparent) }
+.choice__tag {
+  position: absolute; top: 14px; right: 14px;
+  color: var(--interactive); border-color: color-mix(in srgb, var(--interactive) 40%, transparent);
+}
 .choice:disabled { opacity: 0.5; cursor: not-allowed }
 .choice__icon { width: 40px; height: 40px; color: var(--ink) }
-.choice__title { font-size: 16px; font-weight: 600 }
+.choice__title { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.015em }
 .choice__sub { font-size: 13px; color: var(--ink-muted) }
-.choice__limit { margin-top: auto; font-size: 12px; color: var(--ink-subtle) }
+.choice__limit { margin-top: auto; font-family: var(--font-mono); font-size: 11px; color: var(--ink-subtle) }
 
 .progress { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 16px }
 .progress__head { display: flex; justify-content: space-between; gap: 8px; font-size: 14px }
-.progress__name { font-weight: 600 }
-.progress__type { color: var(--ink-muted); font-size: 12px }
+.progress__name { font-weight: 700 }
+.progress__type { color: var(--ink-muted); font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em }
 .err { margin: 4px 0 0; font-size: 12px; color: var(--status-critical-text) }
 .actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between }
+
+.gloss { margin-top: 28px; padding: 0 4px }
 </style>

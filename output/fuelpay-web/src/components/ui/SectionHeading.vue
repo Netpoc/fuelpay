@@ -13,6 +13,6 @@ withDefaults(defineProps<{ title: string; level?: 2 | 3; hint?: string }>(), { l
 </template>
 
 <style scoped>
-.heading { font-weight: 600; margin: 0; }
-.hint { margin-left: 8px; font-weight: 400; font-size: 12px; color: var(--ink-muted); }
+.heading { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.015em; margin: 0; }
+.hint { margin-left: 8px; font-family: var(--font-sans); font-weight: 400; font-size: 12px; letter-spacing: 0; color: var(--ink-muted); }
 </style>

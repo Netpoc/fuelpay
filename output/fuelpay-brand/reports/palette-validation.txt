@@ -16,58 +16,58 @@ rediscovered later:
     [PASS] Contrast vs surface    all 4 >= 3:1
   
     → FAILED — fix the marked checks  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
-    scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+    scope: categorical palettes only. For a lone status/text color check text contrast with this script's apca() or contrast(); for a sequential ramp, lightness monotonicity.
 
 SHIPPING PALETTES
 
   PASS  status marks + fuel trace — light
-  $ validate_palette "#2a78d6,#0E7C5A,#D2760F,#96161F" --mode light --pairs all
+  $ validate_palette "#4450D8,#0E7C5A,#C9700C,#A3172A" --mode light --pairs all
   
   Palette (light, surface #fcfcfb, categorical): 4 slots
     [PASS] Lightness band         all 4 inside L 0.43–0.77
     [PASS] Chroma floor           all 4 >= 0.1
-    [PASS] CVD separation         worst all-pairs #96161F↔#0E7C5A ΔE 9.3 (deutan) · tritan 7.4
-    [PASS] Normal-vision floor    worst all-pairs #0E7C5A↔#2a78d6 ΔE 20.2 (normal)
+    [WARN] CVD separation         worst all-pairs #A3172A↔#0E7C5A ΔE 7.2 (deutan) · tritan 5.8
+    [PASS] Normal-vision floor    worst all-pairs #A3172A↔#C9700C ΔE 20.1 (normal)
     [PASS] Contrast vs surface    all 4 >= 3:1
   
     → ALL CHECKS PASS  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
-    scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+    scope: categorical palettes only. For a lone status/text color check text contrast with this script's apca() or contrast(); for a sequential ramp, lightness monotonicity.
 
   PASS  status marks + fuel trace — dark
-  $ validate_palette "#3987e5,#2FA985,#B78A20,#CC2A46" --mode dark --pairs all
+  $ validate_palette "#7480FF,#22A98A,#B78A20,#CC2A46" --mode dark --pairs all
   
   Palette (dark, surface #1a1a19, categorical): 4 slots
     [PASS] Lightness band         all 4 inside L 0.48–0.67
     [PASS] Chroma floor           all 4 >= 0.1
-    [PASS] CVD separation         worst all-pairs #CC2A46↔#2FA985 ΔE 10.7 (deutan) · tritan 4.7
-    [PASS] Normal-vision floor    worst all-pairs #B78A20↔#2FA985 ΔE 16.6 (normal)
+    [PASS] CVD separation         worst all-pairs #CC2A46↔#22A98A ΔE 11.0 (deutan) · tritan 5.9
+    [PASS] Normal-vision floor    worst all-pairs #B78A20↔#22A98A ΔE 17.3 (normal)
     [PASS] Contrast vs surface    all 4 >= 3:1
   
     → ALL CHECKS PASS  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
-    scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+    scope: categorical palettes only. For a lone status/text color check text contrast with this script's apca() or contrast(); for a sequential ramp, lightness monotonicity.
 
   PASS  status marks alone — light
-  $ validate_palette "#0E7C5A,#D2760F,#96161F" --mode light --pairs all
+  $ validate_palette "#0E7C5A,#C9700C,#A3172A" --mode light --pairs all
   
   Palette (light, surface #fcfcfb, categorical): 3 slots
     [PASS] Lightness band         all 3 inside L 0.43–0.77
     [PASS] Chroma floor           all 3 >= 0.1
-    [PASS] CVD separation         worst all-pairs #96161F↔#0E7C5A ΔE 9.3 (deutan) · tritan 20.6
-    [PASS] Normal-vision floor    worst all-pairs #96161F↔#D2760F ΔE 23.9 (normal)
+    [WARN] CVD separation         worst all-pairs #A3172A↔#0E7C5A ΔE 7.2 (deutan) · tritan 15.7
+    [PASS] Normal-vision floor    worst all-pairs #A3172A↔#C9700C ΔE 20.1 (normal)
     [PASS] Contrast vs surface    all 3 >= 3:1
   
     → ALL CHECKS PASS  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
-    scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+    scope: categorical palettes only. For a lone status/text color check text contrast with this script's apca() or contrast(); for a sequential ramp, lightness monotonicity.
 
   PASS  status marks alone — dark
-  $ validate_palette "#2FA985,#B78A20,#CC2A46" --mode dark --pairs all
+  $ validate_palette "#22A98A,#B78A20,#CC2A46" --mode dark --pairs all
   
   Palette (dark, surface #1a1a19, categorical): 3 slots
     [PASS] Lightness band         all 3 inside L 0.48–0.67
     [PASS] Chroma floor           all 3 >= 0.1
-    [PASS] CVD separation         worst all-pairs #CC2A46↔#2FA985 ΔE 10.7 (deutan) · tritan 16.4
-    [PASS] Normal-vision floor    worst all-pairs #B78A20↔#2FA985 ΔE 16.6 (normal)
+    [PASS] CVD separation         worst all-pairs #CC2A46↔#22A98A ΔE 11.0 (deutan) · tritan 16.4
+    [PASS] Normal-vision floor    worst all-pairs #B78A20↔#22A98A ΔE 17.3 (normal)
     [PASS] Contrast vs surface    all 3 >= 3:1
   
     → ALL CHECKS PASS  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
-    scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+    scope: categorical palettes only. For a lone status/text color check text contrast with this script's apca() or contrast(); for a sequential ramp, lightness monotonicity.

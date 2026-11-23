@@ -21,7 +21,7 @@ import '@/plugins/echarts'
 import type { Incident } from '@/lib/incidents'
 import { isFuelLoss } from '@/lib/incidents'
 import type { TankSeriesPoint } from '@/api/types'
-import { chartTokens } from '@/theme/chart'
+import { chartTokens, CHART_FONT } from '@/theme/chart'
 import { useTheme } from '@/composables/useTheme'
 import { litres } from '@/lib/format'
 
@@ -143,6 +143,7 @@ const gapBands = computed(() =>
 
 const option = computed(() => ({
   animation: false,
+  textStyle: { fontFamily: CHART_FONT },
   grid: [
     { left: narrow.value ? 48 : 62, right: 16, top: 20, height: '52%' },
     { left: narrow.value ? 48 : 62, right: 16, top: '70%', height: '18%' },

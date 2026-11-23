@@ -11,6 +11,7 @@ import { useLeafletMap } from '@/composables/useLeafletMap'
 import type { VehicleDetail, VehicleTrack } from '@/api/types'
 import { OPERATION_SPEC } from '@/lib/operations'
 import { tractorIcon } from './marker'
+import { BRAND } from '@/theme/tokens'
 
 const props = defineProps<{ vehicle: VehicleDetail; track: VehicleTrack | null }>()
 
@@ -24,7 +25,7 @@ function drawBase() {
   if (!base) return
   base.clearLayers()
   L.polygon(props.vehicle.field_polygon, {
-    color: '#f2a93b',
+    color: BRAND.saffron,
     weight: 2,
     dashArray: '6 4',
     fillOpacity: 0.06,
@@ -33,9 +34,9 @@ function drawBase() {
     .addTo(base)
   L.circleMarker([props.vehicle.yard_latitude, props.vehicle.yard_longitude], {
     radius: 7,
-    color: '#fff',
+    color: BRAND.ivory,
     weight: 2,
-    fillColor: '#5a6879',
+    fillColor: BRAND.night3,
     fillOpacity: 1,
   })
     .bindTooltip('Yard', { permanent: true, direction: 'top', offset: [0, -6] })
