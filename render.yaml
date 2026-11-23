@@ -1,0 +1,50 @@
+# Render Blueprint — FuelPay API + Postgres (free tier).
+# Dashboard: New + > Blueprint > pick this repo. Render reads this file.
+#
+# Free-tier facts that shape the config:
+#   - the web service sleeps after 15 min without traffic; the first request
+#     after that takes ~1 min. The simulator catches up on wake-up.
+#   - the free database expires 30 days after creation and holds 1 GB, so the
+#     backfill windows below are cut from 60/30 days to 14.
+#   - free services have no pre-deploy command and no shell, so migrations run
+#     in the start command.
+
+databases:
+  - name: fuelpay-db
+    plan: free
+    databaseName: fuelpay
+    user: fuelpay
+
+services:
+  - type: web
+    name: fuelpay-api
+    runtime: python
+    plan: free
+    rootDir: output/fuelpay-service
+    buildCommand: pip install .
+    startCommand: alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: FUELPAY_DATABASE_URL
+        fromDatabase:
+          name: fuelpay-db
+          property: connectionString
+      # Your Netlify origin, e.g. https://fuelpay.netlify.app (no trailing slash).
+      # Comma-separate several. Render prompts for it on first Blueprint sync.
+      - key: FUELPAY_CORS_ALLOW_ORIGINS
+        sync: false
+      # Tenant key for the seeded demo org. Read it from the service's
+      # Environment tab and paste it into the web app's key gate.
+      - key: FUELPAY_BOOTSTRAP_API_KEY
+        generateValue: true
+      # Break-glass operator key for /v1/platform. Leave blank to disable.
+      - key: FUELPAY_PLATFORM_ADMIN_KEY
+        sync: false
+      - key: FUELPAY_SEED_BACKFILL_DAYS
+        value: "14"
+      - key: FUELPAY_DEMO_BACKFILL_DAYS
+        value: "14"
+      - key: FUELPAY_SIM_ENABLED
+        value: "true"

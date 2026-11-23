@@ -1,5 +1,6 @@
 from functools import lru_cache
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from app.tuning import RefillWindow, TheftTuning
@@ -83,6 +84,19 @@ class Settings(BaseSettings):
     # generators at 5-minute resolution is ~207k readings, written in 2000-row
     # batches. Paid once, on the first boot against an empty database.
     seed_backfill_days: int = 60
+
+    @field_validator("database_url")
+    @classmethod
+    def _use_asyncpg_driver(cls, value: str) -> str:
+        """Accept a plain `postgres://` / `postgresql://` URL and pin asyncpg.
+
+        Managed hosts (Render, Heroku, Railway) hand out driverless URLs, and
+        SQLAlchemy would resolve those to psycopg2, which is not installed.
+        """
+        for prefix in ("postgres://", "postgresql://"):
+            if value.startswith(prefix):
+                return "postgresql+asyncpg://" + value[len(prefix) :]
+        return value
 
     @property
     def cors_origin_list(self) -> list[str]:

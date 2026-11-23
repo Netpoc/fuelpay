@@ -3,6 +3,8 @@
 interface ImportMetaEnv {
   readonly VITE_API_BASE_URL?: string
   readonly VITE_FUELPAY_API_KEY?: string
+  /** Key behind the gate's "Use the demo key" button. Hidden in prod builds when unset. */
+  readonly VITE_DEMO_API_KEY?: string
   /**
    * Basemap tile templates, one per theme.
    *

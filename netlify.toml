@@ -1,0 +1,31 @@
+# Netlify — FuelPay web (Vue + Vite SPA).
+# Dashboard: Add new site > Import from Git > this repo. Netlify reads this file.
+#
+# Set in Site configuration > Environment variables (build-time, baked in):
+#   VITE_API_BASE_URL = https://<your-render-service>.onrender.com/v1
+# Optional:
+#   VITE_DEMO_API_KEY = <key>  -> shows "Use the demo key" on the key gate.
+#   It ships in the public bundle, so only set it if anyone with the URL may
+#   see the seeded demo org. Unset = button hidden.
+# Do NOT set VITE_FUELPAY_API_KEY: it pre-fills the gate for every visitor.
+
+[build]
+  base = "output/fuelpay-web"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# Vue Router uses HTML5 history, so deep links (/fleet, /sites/:id, /demo)
+# must fall back to index.html instead of 404ing.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Hashed build assets never change under the same name.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

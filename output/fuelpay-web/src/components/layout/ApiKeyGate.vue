@@ -19,7 +19,11 @@ const auth = useAuthStore()
 const key = ref(auth.apiKey ?? '')
 const submitting = ref(false)
 
-const DEMO_KEY = 'dev-local-key-change-me'
+// Public "just exploring" key for the seeded demo org. Dev falls back to the
+// service's local default; a production build shows the shortcut only when
+// VITE_DEMO_API_KEY is set, since anything here ships in the public bundle.
+const DEMO_KEY: string =
+  import.meta.env.VITE_DEMO_API_KEY ?? (import.meta.env.DEV ? 'dev-local-key-change-me' : '')
 
 async function submit() {
   if (!key.value.trim()) return
@@ -91,7 +95,7 @@ async function submit() {
           </Button>
         </form>
 
-        <div class="demo">
+        <div v-if="DEMO_KEY" class="demo">
           <span>Just exploring?</span>
           <!-- Was a <code> block the user had to select and copy by hand. -->
           <Button size="small" type="link" @click="key = DEMO_KEY">Use the demo key</Button>
