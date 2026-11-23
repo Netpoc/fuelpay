@@ -9,6 +9,8 @@ before the server starts. Schema changes belong to a deploy step, not to
 whichever replica happened to boot first.
 """
 
+import asyncio
+import contextlib
 import logging
 from contextlib import asynccontextmanager
 from datetime import UTC, datetime
@@ -69,10 +71,15 @@ async def _bootstrap(settings: Settings) -> None:
             logger.info("backfill wrote %d readings and %d events", readings, events)
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    settings = get_settings()
+async def _warm_up(settings: Settings, scheduler) -> None:
+    """Seed/backfill, then start the ticker — off the startup path.
 
+    Runs as a background task so uvicorn binds its port immediately. A
+    first-boot backfill can take minutes on a small instance, and hosts such
+    as Render fail the deploy if no port opens within their scan window. The
+    ticker starts only after the backfill, so the two never write the same
+    sites concurrently.
+    """
     if settings.seed_on_startup:
         try:
             await _bootstrap(settings)
@@ -81,9 +88,7 @@ async def lifespan(app: FastAPI):
             # simply be mid-migration. Log it loudly and serve anyway.
             logger.exception("bootstrap failed; continuing without seed data")
 
-    scheduler = None
-    if settings.sim_enabled:
-        scheduler = create_scheduler(settings)
+    if scheduler is not None:
         scheduler.start()
         logger.info(
             "live ticker started: every %ds, advancing %d simulated minutes per step",
@@ -99,9 +104,21 @@ async def lifespan(app: FastAPI):
     else:
         logger.info("live ticker disabled (FUELPAY_SIM_ENABLED=false)")
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    settings = get_settings()
+    scheduler = create_scheduler(settings) if settings.sim_enabled else None
+    warm_up = asyncio.create_task(_warm_up(settings, scheduler))
+
     yield
 
-    if scheduler is not None:
+    if not warm_up.done():
+        warm_up.cancel()
+        with contextlib.suppress(asyncio.CancelledError):
+            await warm_up
+
+    if scheduler is not None and scheduler.running:
         # wait=False: a tick in flight holds a transaction-scoped lock that is
         # released by the rollback when its connection is torn down, so there
         # is nothing to wait for and shutdown stays prompt.
